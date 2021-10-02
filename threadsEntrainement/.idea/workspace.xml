@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="defba87e-de1a-4816-a391-8e75cc9baf25" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1yiKOPZl2QRrmASZLeEYhYCXVlB" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="preferences.externalResources" />
+  </component>
+  <component name="RunManager" selected="Application.ProductCounter2">
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Application" />
+      <module name="threadsEntrainement" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ChiffreDaffaireGroupe" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ChiffreDaffaireGroupe" />
+      <module name="threadsEntrainement" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductCounter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ProductCounter" />
+      <module name="threadsEntrainement" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductCounter2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ProductCounter2" />
+      <module name="threadsEntrainement" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProductDisplayer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ProductDisplayer" />
+      <module name="threadsEntrainement" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ProductCounter2" />
+        <item itemvalue="Application.ChiffreDaffaireGroupe" />
+        <item itemvalue="Application.ProductCounter" />
+        <item itemvalue="Application.ProductDisplayer" />
+        <item itemvalue="Application.Application" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="defba87e-de1a-4816-a391-8e75cc9baf25" name="Default Changelist" comment="" />
+      <created>1632728939043</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1632728939043</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1878" height="261" key="GridCell.Tab.0.bottom" timestamp="1632737289839">
+      <screen x="0" y="23" width="1920" height="971" />
+    </state>
+    <state width="1878" height="261" key="GridCell.Tab.0.bottom/0.23.1920.969@0.23.1920.969" timestamp="1632730696683" />
+    <state width="1878" height="261" key="GridCell.Tab.0.bottom/0.23.1920.971@0.23.1920.971" timestamp="1632737289839" />
+    <state width="1878" height="261" key="GridCell.Tab.0.center" timestamp="1632737289839">
+      <screen x="0" y="23" width="1920" height="971" />
+    </state>
+    <state width="1878" height="261" key="GridCell.Tab.0.center/0.23.1920.969@0.23.1920.969" timestamp="1632730696681" />
+    <state width="1878" height="261" key="GridCell.Tab.0.center/0.23.1920.971@0.23.1920.971" timestamp="1632737289839" />
+    <state width="1878" height="261" key="GridCell.Tab.0.left" timestamp="1632737289838">
+      <screen x="0" y="23" width="1920" height="971" />
+    </state>
+    <state width="1878" height="261" key="GridCell.Tab.0.left/0.23.1920.969@0.23.1920.969" timestamp="1632730696681" />
+    <state width="1878" height="261" key="GridCell.Tab.0.left/0.23.1920.971@0.23.1920.971" timestamp="1632737289838" />
+    <state width="1878" height="261" key="GridCell.Tab.0.right" timestamp="1632737289839">
+      <screen x="0" y="23" width="1920" height="971" />
+    </state>
+    <state width="1878" height="261" key="GridCell.Tab.0.right/0.23.1920.969@0.23.1920.969" timestamp="1632730696683" />
+    <state width="1878" height="261" key="GridCell.Tab.0.right/0.23.1920.971@0.23.1920.971" timestamp="1632737289839" />
+    <state x="448" y="89" key="SettingsEditor" timestamp="1632729512196">
+      <screen x="0" y="23" width="1920" height="969" />
+    </state>
+    <state x="448" y="89" key="SettingsEditor/0.23.1920.969@0.23.1920.969" timestamp="1632729512196" />
+    <state x="639" y="340" key="com.intellij.ide.util.TipDialog" timestamp="1632728970277">
+      <screen x="0" y="23" width="1920" height="969" />
+    </state>
+    <state x="639" y="340" key="com.intellij.ide.util.TipDialog/0.23.1920.969@0.23.1920.969" timestamp="1632728970277" />
+  </component>
+</project>
