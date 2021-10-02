@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 public class AttractionController {
@@ -30,7 +31,7 @@ public class AttractionController {
     // The reward points for visiting each Attraction.
     //    Note: Attraction reward points can be gathered from RewardsCentral
     @GetMapping(value = "/getNearbyAttractions")
-    public List<AttractionDto> getNearbyAttractions(@RequestParam String userName) {
+    public List<AttractionDto> getNearbyAttractions(@RequestParam String userName) throws ExecutionException, InterruptedException {
         User user = attractionService.getUser(userName);
         LocationDto locationDto = attractionService.getLocation(user.getUserName());
         return attractionService.getNearByAttractions(locationDto);
@@ -38,7 +39,7 @@ public class AttractionController {
 
 
     @GetMapping(value = "/getAllAttractions")
-    public List<AttractionDto> getAllAttractions() {
-        return attractionService.getAttractions();
+    public List<AttractionDto> getAllAttractions() throws ExecutionException, InterruptedException {
+        return attractionService.getAttractions().get();
     }
 }
