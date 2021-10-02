@@ -5,11 +5,13 @@ import com.mattraction.dto.LocationDto;
 import com.mattraction.model.User;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public interface AttractionService {
-    List<AttractionDto> getNearByAttractions(LocationDto location);
+    List<AttractionDto> getNearByAttractions(LocationDto location) throws ExecutionException, InterruptedException;
 
-    List<AttractionDto> getAttractions();
+    CompletableFuture<List<AttractionDto>> getAttractions();
 
     User getUser(String userName);
 

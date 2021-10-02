@@ -10,10 +10,13 @@ import gpsUtil.location.Attraction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,9 +37,9 @@ public class AttractionServiceImpl implements AttractionService {
 
 
     @Override
-    public List<AttractionDto> getNearByAttractions(LocationDto location) {
+    public List<AttractionDto> getNearByAttractions(LocationDto location) throws ExecutionException, InterruptedException {
         List<AttractionDto> nearbyAttractions = new ArrayList<>();
-        for (AttractionDto attraction : getAttractions()) {
+        for (AttractionDto attraction : getAllAttractions()) {
             if (isWithinAttractionProximity(attraction, location)) {
                 nearbyAttractions.add(attraction);
             }
@@ -44,21 +47,27 @@ public class AttractionServiceImpl implements AttractionService {
         return nearbyAttractions;
     }
 
-    public List<AttractionDto> getGetNearByAttractions(LocationDto location) {
-        return getAttractions()
+    public List<AttractionDto> getGetNearByAttractions(LocationDto location) throws ExecutionException, InterruptedException {
+        return getAllAttractions()
                 .stream()
                 .filter(attractionDto -> isWithinAttractionProximity(attractionDto, location))
                 .collect(Collectors.toList());
     }
 
+    @Async(value = "taskExecutor")
     @Override
-    public List<AttractionDto> getAttractions() {
+    public CompletableFuture<List<AttractionDto>> getAttractions() {
         List<Attraction> attractions = gpsUtil.getAttractions();
         List<AttractionDto> attractionDtoList = new ArrayList<>();
         for (Attraction attraction : attractions) {
             attractionDtoList.add(new AttractionDto(attraction.longitude, attraction.latitude, attraction.attractionName, attraction.city, attraction.state, attraction.attractionId));
         }
-        return attractionDtoList;
+        return CompletableFuture.completedFuture(attractionDtoList);
+    }
+
+    private List<AttractionDto> getAllAttractions() throws ExecutionException, InterruptedException {
+        List<AttractionDto> attractions = getAttractions().get();
+        return attractions;
     }
 
     @Override
