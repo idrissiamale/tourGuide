@@ -14,7 +14,6 @@ import rewardCentral.RewardCentral;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 @Service
 public class RewardsServiceImpl implements RewardsService {
@@ -47,7 +46,7 @@ public class RewardsServiceImpl implements RewardsService {
 
     @Async(value = "taskExecutor")
     @Override
-    public CompletableFuture<Void> calculateRewards(User user) throws ExecutionException, InterruptedException {
+    public CompletableFuture<Void> calculateRewards(User user)  {
         List<VisitedLocationDto> userLocations = user.getVisitedLocations();
         List<AttractionDto> attractions = getAllAttractions();
 

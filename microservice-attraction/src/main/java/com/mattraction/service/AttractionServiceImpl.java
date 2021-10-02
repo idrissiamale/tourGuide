@@ -66,8 +66,7 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     private List<AttractionDto> getAllAttractions() throws ExecutionException, InterruptedException {
-        List<AttractionDto> attractions = getAttractions().get();
-        return attractions;
+        return getAttractions().get();
     }
 
     @Override
