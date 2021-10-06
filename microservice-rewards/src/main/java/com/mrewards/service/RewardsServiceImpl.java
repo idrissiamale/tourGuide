@@ -44,10 +44,6 @@ public class RewardsServiceImpl implements RewardsService {
         return CompletableFuture.completedFuture(null);
     }
 
-
-
-
-
     @Override
     public List<UserReward> getUserRewards(User user) {
         return user.getUserRewards();

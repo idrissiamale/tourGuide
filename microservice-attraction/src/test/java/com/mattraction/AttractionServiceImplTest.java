@@ -32,7 +32,7 @@ public class AttractionServiceImplTest {
     public void setUp() {
         Locale.setDefault(Locale.US);
         gpsUtil = new GpsUtil();
-        attractionService = new AttractionServiceImpl(gpsUtil);
+        attractionService = new AttractionServiceImpl(gpsUtil, rewardsCentral);
         user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
     }
 

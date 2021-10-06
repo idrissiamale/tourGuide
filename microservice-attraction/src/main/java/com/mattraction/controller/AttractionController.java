@@ -1,7 +1,7 @@
 package com.mattraction.controller;
 
 import com.mattraction.dto.AttractionDto;
-import com.mattraction.dto.LocationDto;
+import com.mattraction.dto.UserInfo;
 import com.mattraction.model.User;
 import com.mattraction.service.AttractionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @RestController
 public class AttractionController {
@@ -31,15 +30,20 @@ public class AttractionController {
     // The reward points for visiting each Attraction.
     //    Note: Attraction reward points can be gathered from RewardsCentral
     @GetMapping(value = "/getNearbyAttractions")
-    public List<AttractionDto> getNearbyAttractions(@RequestParam String userName) throws ExecutionException, InterruptedException {
+    public UserInfo getNearbyAttractions(@RequestParam String userName) {
         User user = attractionService.getUser(userName);
-        LocationDto locationDto = attractionService.getLocation(user.getUserName());
-        return attractionService.getNearByAttractions(locationDto);
+        return attractionService.getNearbyAttractions(user);
     }
 
 
     @GetMapping(value = "/getAllAttractions")
-    public List<AttractionDto> getAllAttractions() throws ExecutionException, InterruptedException {
-        return attractionService.getAttractions().get();
+    public List<AttractionDto> getAllAttractions() {
+        return attractionService.getAttractions();
     }
+
+    //@GetMapping(value = "/getFiveClosestAttractions")
+    //public List<Object> getTheClosestFiveAttractions(@RequestParam String userName) {
+    //User user = attractionService.getUser(userName);
+    //return attractionService.getTheClosestFiveAttractions(user);
+    //}
 }

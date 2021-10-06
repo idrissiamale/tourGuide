@@ -14,10 +14,11 @@ public class AsyncConfig {
     @Bean(name = "taskExecutor")
     public Executor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(60);
-        executor.setMaxPoolSize(70);
+        executor.setCorePoolSize(70);
+        executor.setMaxPoolSize(80);
         executor.setQueueCapacity(1000);
         executor.setKeepAliveSeconds(60);
+        executor.setWaitForTasksToCompleteOnShutdown(true);
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         executor.setThreadNamePrefix("rewardsThread-");
         executor.initialize();
@@ -27,10 +28,11 @@ public class AsyncConfig {
     @Bean(name = "taskExecutorRewardsPoint")
     public Executor taskExecutorReward() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(40);
-        executor.setMaxPoolSize(50);
+        executor.setCorePoolSize(70);
+        executor.setMaxPoolSize(80);
         executor.setQueueCapacity(1000);
         executor.setKeepAliveSeconds(60);
+        executor.setWaitForTasksToCompleteOnShutdown(true);
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         executor.setThreadNamePrefix("rewardsPointThread-");
         executor.initialize();

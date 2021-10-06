@@ -1,7 +1,9 @@
 package com.mattraction.service;
 
 import com.mattraction.dto.AttractionDto;
+import com.mattraction.dto.AttractionInfo;
 import com.mattraction.dto.LocationDto;
+import com.mattraction.dto.UserInfo;
 import com.mattraction.model.User;
 import com.mattraction.proxies.MicroserviceUserLocationsProxy;
 import com.mattraction.proxies.MicroserviceUsersProxy;
@@ -10,13 +12,12 @@ import gpsUtil.location.Attraction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import rewardCentral.RewardCentral;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,43 +32,31 @@ public class AttractionServiceImpl implements AttractionService {
     @Autowired
     MicroserviceUserLocationsProxy microserviceUserLocationsProxy;
 
-    public AttractionServiceImpl(GpsUtil gpsUtil) {
+    @Autowired
+    private RewardCentral rewardsCentral;
+
+    public AttractionServiceImpl(GpsUtil gpsUtil, RewardCentral rewardsCentral) {
         this.gpsUtil = gpsUtil;
+        this.rewardsCentral = rewardsCentral;
     }
-
 
     @Override
-    public List<AttractionDto> getNearByAttractions(LocationDto location) throws ExecutionException, InterruptedException {
-        List<AttractionDto> nearbyAttractions = new ArrayList<>();
-        for (AttractionDto attraction : getAllAttractions()) {
-            if (isWithinAttractionProximity(attraction, location)) {
-                nearbyAttractions.add(attraction);
-            }
-        }
-        return nearbyAttractions;
+    public UserInfo getNearbyAttractions(User user) {
+        List<AttractionInfo> closestFiveAttractions = getFiveClosestAttractions(user);
+        LocationDto userLocation = getLocation(user.getUserName());
+        return new UserInfo(userLocation.getLatitude(), userLocation.getLongitude(), closestFiveAttractions);
     }
 
-    public List<AttractionDto> getGetNearByAttractions(LocationDto location) throws ExecutionException, InterruptedException {
-        return getAllAttractions()
-                .stream()
-                .filter(attractionDto -> isWithinAttractionProximity(attractionDto, location))
-                .collect(Collectors.toList());
-    }
-
-    @Async(value = "taskExecutor")
     @Override
-    public CompletableFuture<List<AttractionDto>> getAttractions() {
+    public List<AttractionDto> getAttractions() {
         List<Attraction> attractions = gpsUtil.getAttractions();
         List<AttractionDto> attractionDtoList = new ArrayList<>();
         for (Attraction attraction : attractions) {
             attractionDtoList.add(new AttractionDto(attraction.longitude, attraction.latitude, attraction.attractionName, attraction.city, attraction.state, attraction.attractionId));
         }
-        return CompletableFuture.completedFuture(attractionDtoList);
+        return attractionDtoList;
     }
 
-    private List<AttractionDto> getAllAttractions() throws ExecutionException, InterruptedException {
-        return getAttractions().get();
-    }
 
     @Override
     public User getUser(String userName) {
@@ -79,12 +68,25 @@ public class AttractionServiceImpl implements AttractionService {
         return microserviceUserLocationsProxy.getLocation(userName);
     }
 
-    private boolean isWithinAttractionProximity(AttractionDto attraction, LocationDto location) {
-        // proximity in miles
-        int attractionProximityRange = 200;
-        return !(getDistance(attraction, location) > attractionProximityRange);
+    private List<AttractionInfo> getFiveClosestAttractions(User user) {
+        return getAttractionInfo(user).stream().limit(5).collect(Collectors.toList());
     }
 
+    private List<AttractionInfo> getAttractionInfo(User user) {
+        List<AttractionInfo> attractionInfoList = new ArrayList<>();
+        LocationDto userLocation = getLocation(user.getUserName());
+        double distance;
+        for (AttractionDto attraction : getAttractions()) {
+            distance = getDistance(userLocation, attraction);
+            attractionInfoList.add(new AttractionInfo(attraction.getAttractionName(), attraction.getLatitude(), attraction.getLongitude(), distance, getRewardPoints(attraction, user)));
+        }
+        attractionInfoList.sort(Comparator.comparingDouble(AttractionInfo::getDistance));
+        return attractionInfoList;
+    }
+
+    private int getRewardPoints(AttractionDto attraction, User user) {
+        return rewardsCentral.getAttractionRewardPoints(attraction.getAttractionId(), user.getUserId());
+    }
 
     private double getDistance(LocationDto loc1, LocationDto loc2) {
         double lat1 = Math.toRadians(loc1.getLatitude());
