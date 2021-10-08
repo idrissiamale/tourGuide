@@ -42,8 +42,9 @@ public class AttractionServiceImpl implements AttractionService {
 
     @Override
     public UserInfo getNearbyAttractions(User user) {
-        List<AttractionInfo> closestFiveAttractions = getFiveClosestAttractions(user);
-        LocationDto userLocation = getLocation(user.getUserName());
+        List<AttractionInfo> closestFiveAttractions = getTheClosestFiveAttractions(user);
+        LocationDto userLocation = microserviceUserLocationsProxy.getLocation(user.getUserName());
+        logger.info("Successfully fetched the nearby attractions data for the following user : " + user.getUserName());
         return new UserInfo(userLocation.getLatitude(), userLocation.getLongitude(), closestFiveAttractions);
     }
 
@@ -52,29 +53,25 @@ public class AttractionServiceImpl implements AttractionService {
         List<Attraction> attractions = gpsUtil.getAttractions();
         List<AttractionDto> attractionDtoList = new ArrayList<>();
         for (Attraction attraction : attractions) {
-            attractionDtoList.add(new AttractionDto(attraction.longitude, attraction.latitude, attraction.attractionName, attraction.city, attraction.state, attraction.attractionId));
+            attractionDtoList.add(new AttractionDto(attraction.latitude, attraction.longitude, attraction.attractionName, attraction.city, attraction.state, attraction.attractionId));
         }
+        logger.info("Successfully fetched attractions.");
         return attractionDtoList;
     }
 
-
     @Override
     public User getUser(String userName) {
+        logger.info("Successfully fetched user data.");
         return microserviceUsersProxy.getUser(userName);
     }
 
-    @Override
-    public LocationDto getLocation(String userName) {
-        return microserviceUserLocationsProxy.getLocation(userName);
+    private List<AttractionInfo> getTheClosestFiveAttractions(User user) {
+        return getAttractionsInfo(user).stream().limit(5).collect(Collectors.toList());
     }
 
-    private List<AttractionInfo> getFiveClosestAttractions(User user) {
-        return getAttractionInfo(user).stream().limit(5).collect(Collectors.toList());
-    }
-
-    private List<AttractionInfo> getAttractionInfo(User user) {
+    private List<AttractionInfo> getAttractionsInfo(User user) {
         List<AttractionInfo> attractionInfoList = new ArrayList<>();
-        LocationDto userLocation = getLocation(user.getUserName());
+        LocationDto userLocation = microserviceUserLocationsProxy.getLocation(user.getUserName());
         double distance;
         for (AttractionDto attraction : getAttractions()) {
             distance = getDistance(userLocation, attraction);

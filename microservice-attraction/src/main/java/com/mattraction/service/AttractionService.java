@@ -1,18 +1,15 @@
 package com.mattraction.service;
 
 import com.mattraction.dto.AttractionDto;
-import com.mattraction.dto.LocationDto;
 import com.mattraction.dto.UserInfo;
 import com.mattraction.model.User;
 
 import java.util.List;
 
 public interface AttractionService {
-    List<AttractionDto> getAttractions();
-
     UserInfo getNearbyAttractions(User user);
 
-    User getUser(String userName);
+    List<AttractionDto> getAttractions();
 
-    LocationDto getLocation(String userName);
+    User getUser(String userName);
 }
