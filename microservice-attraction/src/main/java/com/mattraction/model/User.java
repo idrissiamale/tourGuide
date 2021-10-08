@@ -2,12 +2,13 @@ package com.mattraction.model;
 
 import com.mattraction.dto.VisitedLocationDto;
 import lombok.Getter;
-import lombok.ToString;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
-@ToString
 public class User {
     private final UUID userId;
     private final String userName;
@@ -21,23 +22,5 @@ public class User {
         this.userName = userName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
-    }
-
-    public List<VisitedLocationDto> getVisitedLocations() {
-        return Collections.unmodifiableList(visitedLocations);
-    }
-
-    public void addToVisitedLocations(VisitedLocationDto visitedLocation) {
-        synchronized (this) {
-            visitedLocations.add(visitedLocation);
-        }
-    }
-
-    public void clearVisitedLocations() {
-        visitedLocations.clear();
-    }
-
-    public VisitedLocationDto getLastVisitedLocation() {
-        return visitedLocations.get(visitedLocations.size() - 1);
     }
 }

@@ -15,8 +15,8 @@ public class AttractionDto extends LocationDto {
     private String state;
     private UUID attractionId;
 
-    public AttractionDto(double longitude, double latitude, String attractionName, String city, String state, UUID attractionId) {
-        super(longitude, latitude);
+    public AttractionDto(double latitude, double longitude, String attractionName, String city, String state, UUID attractionId) {
+        super(latitude, longitude);
         this.attractionName = attractionName;
         this.city = city;
         this.state = state;

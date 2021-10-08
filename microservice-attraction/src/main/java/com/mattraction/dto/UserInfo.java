@@ -1,39 +1,24 @@
 package com.mattraction.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.List;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class UserInfo {
-    private double longitude;
     private double latitude;
+    private double longitude;
     private List<AttractionInfo> nearbyAttractions;
 
-    public UserInfo(double longitude, double latitude, List<AttractionInfo> nearbyAttractions) {
-        this.longitude = longitude;
+    public UserInfo(double latitude, double longitude, List<AttractionInfo> nearbyAttractions) {
         this.latitude = latitude;
-        this.nearbyAttractions = nearbyAttractions;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
         this.longitude = longitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public List<AttractionInfo> getNearbyAttractions() {
-        return nearbyAttractions;
-    }
-
-    public void setNearbyAttractions(List<AttractionInfo> nearbyAttractions) {
         this.nearbyAttractions = nearbyAttractions;
     }
 }
