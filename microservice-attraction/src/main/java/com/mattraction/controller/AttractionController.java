@@ -4,6 +4,8 @@ import com.mattraction.dto.AttractionDto;
 import com.mattraction.dto.UserInfo;
 import com.mattraction.model.User;
 import com.mattraction.service.AttractionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @RestController
 public class AttractionController {
+    private Logger logger = LoggerFactory.getLogger(AttractionController.class);
     @Autowired
     AttractionService attractionService;
 
@@ -20,30 +23,17 @@ public class AttractionController {
         this.attractionService = attractionService;
     }
 
-    //  TODO: Change this method to no longer return a List of Attractions.
-    //  Instead: Get the closest five tourist attractions to the user - no matter how far away they are.
-    //  Return a new JSON object that contains:
-    // Name of Tourist attraction,
-    // Tourist attractions lat/long,
-    // The user's location lat/long,
-    // The distance in miles between the user's location and each of the attractions.
-    // The reward points for visiting each Attraction.
-    //    Note: Attraction reward points can be gathered from RewardsCentral
     @GetMapping(value = "/getNearbyAttractions")
     public UserInfo getNearbyAttractions(@RequestParam String userName) {
         User user = attractionService.getUser(userName);
+        logger.info("User's nearby attractions found successfully.");
         return attractionService.getNearbyAttractions(user);
     }
 
 
     @GetMapping(value = "/getAllAttractions")
     public List<AttractionDto> getAllAttractions() {
+        logger.info("TourGuide attractions found successfully.");
         return attractionService.getAttractions();
     }
-
-    //@GetMapping(value = "/getFiveClosestAttractions")
-    //public List<Object> getTheClosestFiveAttractions(@RequestParam String userName) {
-    //User user = attractionService.getUser(userName);
-    //return attractionService.getTheClosestFiveAttractions(user);
-    //}
 }
