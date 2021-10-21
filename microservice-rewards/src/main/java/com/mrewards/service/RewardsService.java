@@ -5,17 +5,17 @@ import com.mrewards.model.User;
 import com.mrewards.model.UserReward;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public interface RewardsService {
-   CompletableFuture<Void> calculateRewards(User user) throws ExecutionException, InterruptedException;
+    void calculateRewards(User user) throws ExecutionException, InterruptedException;
 
-    List<AttractionDto> getAttractions();
-
-    List<UserReward> getUserRewards(User user);
+    List<UserReward> getUserRewards(User user) throws ExecutionException, InterruptedException;
 
     User getUser(String userName);
 
     List<User> getAllUsers();
+
+    List<AttractionDto> getAllAttractions();
+
 }

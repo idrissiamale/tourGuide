@@ -1,11 +1,12 @@
 package com.mrewards.model;
 
-import com.google.common.collect.ImmutableList;
 import com.mrewards.dto.VisitedLocationDto;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.util.*;
+import java.util.Date;
+import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
 @ToString
@@ -15,8 +16,8 @@ public class User {
     private String phoneNumber;
     private String emailAddress;
     private Date latestLocationTimestamp;
-    private List<VisitedLocationDto> visitedLocations = new ArrayList<>();
-    private List<UserReward> userRewards = new ArrayList<>();
+    private CopyOnWriteArrayList<VisitedLocationDto> visitedLocations = new CopyOnWriteArrayList<>();
+    private CopyOnWriteArrayList<UserReward> userRewards = new CopyOnWriteArrayList<>();
 
     public User(UUID userId, String userName, String phoneNumber, String emailAddress) {
         this.userId = userId;
@@ -25,14 +26,12 @@ public class User {
         this.emailAddress = emailAddress;
     }
 
-    public List<VisitedLocationDto> getVisitedLocations() {
-        return ImmutableList.copyOf(visitedLocations);
+    public CopyOnWriteArrayList<VisitedLocationDto> getVisitedLocations() {
+        return visitedLocations;
     }
 
     public void addToVisitedLocations(VisitedLocationDto visitedLocation) {
-        synchronized (this) {
-            visitedLocations.add(visitedLocation);
-        }
+        visitedLocations.add(visitedLocation);
     }
 
     public void clearVisitedLocations() {
@@ -43,18 +42,11 @@ public class User {
         return visitedLocations.get(visitedLocations.size() - 1);
     }
 
-    public Date getLatestLocationTimestamp() {
-        return getLastVisitedLocation().getTimeVisited();
-    }
-
-
-    public List<UserReward> getUserRewards() {
-        return ImmutableList.copyOf(userRewards);
+    public CopyOnWriteArrayList<UserReward> getUserRewards() {
+        return userRewards;
     }
 
     public void addUserReward(UserReward userReward) {
-        synchronized (this) {
-            userRewards.add(userReward);
-        }
+        userRewards.add(userReward);
     }
 }

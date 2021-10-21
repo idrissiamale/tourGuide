@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 public class RewardsServiceImpl implements RewardsService {
@@ -21,11 +23,26 @@ public class RewardsServiceImpl implements RewardsService {
     // proximity in miles
     private int defaultProximityBuffer = 10;
     private int proximityBuffer = defaultProximityBuffer;
-    private final RewardCentralService rewardCentralService;
-    private final MicroserviceAttractionProxy microserviceAttractionProxy;
-    private final MicroserviceUsersProxy microserviceUsersProxy;
+    @Autowired
+    private RewardCentralService rewardCentralService;
 
     @Autowired
+    MicroserviceAttractionProxy microserviceAttractionProxy;
+
+    @Autowired
+    MicroserviceUsersProxy microserviceUsersProxy;
+
+    private ExecutorService executor = Executors.newFixedThreadPool(1000);
+
+    public void setProximityBuffer(int proximityBuffer) {
+        this.proximityBuffer = proximityBuffer;
+    }
+
+    public void setDefaultProximityBuffer() {
+        proximityBuffer = defaultProximityBuffer;
+    }
+
+
     public RewardsServiceImpl(RewardCentralService rewardCentralService, MicroserviceAttractionProxy microserviceAttractionProxy, MicroserviceUsersProxy microserviceUsersProxy) {
         this.rewardCentralService = rewardCentralService;
         this.microserviceAttractionProxy = microserviceAttractionProxy;
@@ -33,29 +50,13 @@ public class RewardsServiceImpl implements RewardsService {
     }
 
     @Override
-    public CompletableFuture<Void> calculateRewards(User user) throws ExecutionException, InterruptedException {
-        List<VisitedLocationDto> userLocations = user.getVisitedLocations();
-        List<AttractionDto> attractions = getAttractions();
-        for (VisitedLocationDto visitedLocation : userLocations) {
-            for (AttractionDto attraction : attractions) {
-                if (hasNoReward(user, attraction) && nearAttraction(visitedLocation, attraction)) {
-                    rewardCentralService.getRewardPoints(attraction, user);
-                    user.addUserReward(new UserReward(visitedLocation, attraction));
-                    //System.out.println(user.getUserRewards().size());
-                }
-            }
-        }
-        return CompletableFuture.completedFuture(null);
-    }
-
-    @Override
-    public List<AttractionDto> getAttractions() {
-        return microserviceAttractionProxy.getAllAttractions();
+    public void calculateRewards(User user) throws ExecutionException, InterruptedException {
+        rewardCentralService.sendRewardPoints(user);
     }
 
 
     @Override
-    public List<UserReward> getUserRewards(User user) {
+    public List<UserReward> getUserRewards(User user) throws ExecutionException, InterruptedException {
         return user.getUserRewards();
     }
 
@@ -69,25 +70,9 @@ public class RewardsServiceImpl implements RewardsService {
         return microserviceUsersProxy.getAllUsers();
     }
 
-    private boolean hasNoReward(User user, AttractionDto attraction) {
-        return user.getUserRewards().stream().noneMatch(reward -> reward.getAttraction().getAttractionName().equals(attraction.getAttractionName()));
-    }
-
-    private boolean nearAttraction(VisitedLocationDto visitedLocation, AttractionDto attraction) {
-        return getDistance(attraction, visitedLocation.getLocationDto()) <= proximityBuffer;
-    }
-
-    private double getDistance(LocationDto loc1, LocationDto loc2) {
-        double lat1 = Math.toRadians(loc1.getLatitude());
-        double lon1 = Math.toRadians(loc1.getLongitude());
-        double lat2 = Math.toRadians(loc2.getLatitude());
-        double lon2 = Math.toRadians(loc2.getLongitude());
-
-        double angle = Math.acos(Math.sin(lat1) * Math.sin(lat2)
-                + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));
-
-        double nauticalMiles = 60 * Math.toDegrees(angle);
-        return STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;
+    @Override
+    public List<AttractionDto> getAllAttractions() {
+        return microserviceAttractionProxy.getAllAttractions();
     }
 
 
@@ -97,3 +82,4 @@ public class RewardsServiceImpl implements RewardsService {
     //}
 
 }
+

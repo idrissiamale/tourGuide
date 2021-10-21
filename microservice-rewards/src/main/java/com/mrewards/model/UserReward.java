@@ -22,8 +22,4 @@ public class UserReward {
 		this.attraction = attraction;
 		this.rewardPoints = rewardPoints;
 	}
-
-	public void setRewardPoints(int rewardPoints) {
-		this.rewardPoints = rewardPoints;
-	}
 }
