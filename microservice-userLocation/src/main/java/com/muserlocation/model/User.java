@@ -5,42 +5,45 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
 @Setter
 @ToString
 public class User {
-	private final UUID userId;
-	private final String userName;
-	private String phoneNumber;
-	private String emailAddress;
-	private Date latestLocationTimestamp;
-	private List<VisitedLocationDto> visitedLocations = new ArrayList<>();
+    private final UUID userId;
+    private final String userName;
+    private String phoneNumber;
+    private String emailAddress;
+    private Date latestLocationTimestamp;
+    private CopyOnWriteArrayList<VisitedLocationDto> visitedLocations = new CopyOnWriteArrayList<>();
 
-	public User(UUID userId, String userName, String phoneNumber, String emailAddress) {
-		this.userId = userId;
-		this.userName = userName;
-		this.phoneNumber = phoneNumber;
-		this.emailAddress = emailAddress;
-	}
+    public User(UUID userId, String userName, String phoneNumber, String emailAddress) {
+        this.userId = userId;
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+    }
 
-	public void addToVisitedLocations(VisitedLocationDto visitedLocation) {
-		visitedLocations.add(visitedLocation);
-	}
+    public CopyOnWriteArrayList<VisitedLocationDto> getVisitedLocations() {
+        return visitedLocations;
+    }
 
-	public void clearVisitedLocations() {
-		visitedLocations.clear();
-	}
+    public void addToVisitedLocations(VisitedLocationDto visitedLocation) {
+        visitedLocations.add(visitedLocation);
+    }
 
-	public VisitedLocationDto getLastVisitedLocation() {
-		return visitedLocations.get(visitedLocations.size() - 1);
-	}
+    public void clearVisitedLocations() {
+        visitedLocations.clear();
+    }
 
-	public VisitedLocationDto getVisitedLocation() {
-		return visitedLocations.get(0);
-	}
+    public VisitedLocationDto getLastVisitedLocation() {
+        return visitedLocations.get(visitedLocations.size() - 1);
+    }
+
+    public VisitedLocationDto getVisitedLocation() {
+        return visitedLocations.get(0);
+    }
 }

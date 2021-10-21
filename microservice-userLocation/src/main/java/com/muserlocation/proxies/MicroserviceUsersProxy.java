@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @FeignClient(name = "microservice-user", url = "localhost:8081", configuration = {FeignExceptionConfig.class})
 public interface MicroserviceUsersProxy {
@@ -15,5 +15,5 @@ public interface MicroserviceUsersProxy {
     User getUser(@RequestParam("userName") String userName);
 
     @GetMapping(value = "/getAllUsers")
-    List<User> getAllUsers();
+    CopyOnWriteArrayList<User> getAllUsers();
 }

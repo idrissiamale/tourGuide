@@ -10,8 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Date;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.IntStream;
 
 @Service
@@ -34,8 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return internalUserMap.values().parallelStream().collect(Collectors.toList());
+    public CopyOnWriteArrayList<User> getAllUsers() {
+        return new CopyOnWriteArrayList<>(internalUserMap.values());
     }
 
     @Override
@@ -52,7 +56,7 @@ public class UserServiceImpl implements UserService {
      *
      **********************************************************************************/
     // Database connection will be used for external users, but for testing purposes internal users are provided and stored in memory
-    private final Map<String, User> internalUserMap = new HashMap<>();
+    private final Map<String, User> internalUserMap = new ConcurrentHashMap<>();
 
     private void initializeInternalUsers() {
         IntStream.range(0, InternalTestHelper.getInternalUserNumber()).forEach(i -> {

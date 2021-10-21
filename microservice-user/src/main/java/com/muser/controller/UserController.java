@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 @RestController
@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/getAllUsers")
-    public List<User> getAllUsers() {
+    public CopyOnWriteArrayList<User> getAllUsers() {
         return userService.getAllUsers();
     }
 }

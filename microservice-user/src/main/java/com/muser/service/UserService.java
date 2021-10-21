@@ -3,12 +3,12 @@ package com.muser.service;
 
 import com.muser.model.User;
 
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public interface UserService {
     User getUser(String userName);
 
-    List<User> getAllUsers();
+    CopyOnWriteArrayList<User> getAllUsers();
 
     void addUser(User user);
 }
