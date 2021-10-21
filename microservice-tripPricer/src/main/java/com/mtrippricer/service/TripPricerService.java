@@ -1,12 +1,12 @@
 package com.mtrippricer.service;
 
-import com.mtrippricer.model.User;
+import com.mtrippricer.dto.UserDto;
 import tripPricer.Provider;
 
 import java.util.List;
 
 public interface TripPricerService {
-    List<Provider> getTripDeals(User user);
+    List<Provider> getTripDeals(UserDto user);
 
-    User getUser(String userName);
+    UserDto getUser(String userName);
 }

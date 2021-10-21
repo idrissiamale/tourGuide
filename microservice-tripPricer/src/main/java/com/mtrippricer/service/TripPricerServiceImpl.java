@@ -1,7 +1,8 @@
 package com.mtrippricer.service;
 
-import com.mtrippricer.model.User;
+import com.mtrippricer.dto.UserDto;
 import com.mtrippricer.model.UserReward;
+import com.mtrippricer.proxies.MicroserviceAttractionProxy;
 import com.mtrippricer.proxies.MicroserviceUsersProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,24 +24,29 @@ public class TripPricerServiceImpl implements TripPricerService {
     @Autowired
     MicroserviceUsersProxy microserviceUsersProxy;
 
+    @Autowired
+    MicroserviceAttractionProxy microserviceAttractionProxy;
+
     public TripPricerServiceImpl(TripPricer tripPricer) {
         this.tripPricer = tripPricer;
     }
 
     @Override
-    public List<Provider> getTripDeals(User user) {
-        List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),
-                user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(), getCumulativeRewardsPoints(user));
+    public List<Provider> getTripDeals(UserDto user) {
+        int adults = user.getUserPreferences().getNumberOfAdults();
+        int children = user.getUserPreferences().getNumberOfChildren();
+        int nightsStay = user.getUserPreferences().getTripDuration();
+        List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), adults, children, nightsStay, getCumulativeRewardsPoints(user));
         user.setTripDeals(providers);
         return providers;
     }
 
     @Override
-    public User getUser(String userName) {
+    public UserDto getUser(String userName) {
         return microserviceUsersProxy.getUser(userName);
     }
 
-    private int getCumulativeRewardsPoints(User user) {
+    private int getCumulativeRewardsPoints(UserDto user) {
         return user.getUserRewards().stream().mapToInt(UserReward::getRewardPoints).sum();
     }
 }

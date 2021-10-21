@@ -7,6 +7,7 @@ import javax.money.CurrencyUnit;
 import javax.money.Monetary;
 
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

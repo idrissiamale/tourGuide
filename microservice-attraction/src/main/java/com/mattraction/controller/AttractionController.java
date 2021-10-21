@@ -33,7 +33,7 @@ public class AttractionController {
 
     @GetMapping(value = "/getAllAttractions")
     public List<AttractionDto> getAllAttractions() {
-        logger.info("TourGuide attractions found successfully.");
+        //logger.info("TourGuide attractions found successfully.");
         return attractionService.getAttractions();
     }
 }

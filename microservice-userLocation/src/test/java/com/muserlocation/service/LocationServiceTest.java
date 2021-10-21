@@ -5,10 +5,11 @@ import com.muserlocation.dto.VisitedLocationDto;
 import com.muserlocation.model.User;
 import com.muserlocation.proxies.MicroserviceTrackerProxy;
 import com.muserlocation.proxies.MicroserviceUsersProxy;
-import gpsUtil.GpsUtil;
 import org.apache.commons.lang3.time.StopWatch;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Date;
 import java.util.List;
@@ -19,15 +20,21 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LocationServiceTest {
     private LocationServiceImpl locationService;
     private User user;
 
+    @Autowired
+    MicroserviceUsersProxy microserviceUsersProxy;
+
+    @Autowired
+    MicroserviceTrackerProxy microserviceTrackerProxy;
 
     @BeforeEach
     public void setUp() {
         Locale.setDefault(Locale.US);
-        locationService = new LocationServiceImpl();
+        locationService = new LocationServiceImpl(microserviceUsersProxy, microserviceTrackerProxy);
         user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
     }
 
@@ -56,7 +63,6 @@ public class LocationServiceTest {
     @Test
     public void highVolumeTrackLocation() {
         List<User> allUsers = locationService.getAllUsers();
-        System.out.println(allUsers);
 
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
@@ -68,6 +74,5 @@ public class LocationServiceTest {
         System.out.println("highVolumeTrackLocation: Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
         assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
     }
-
 
 }

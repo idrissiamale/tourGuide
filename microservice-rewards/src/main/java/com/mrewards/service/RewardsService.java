@@ -9,14 +9,13 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public interface RewardsService {
-    CompletableFuture<Void> calculateRewards(User user) throws ExecutionException, InterruptedException;
+   CompletableFuture<Void> calculateRewards(User user) throws ExecutionException, InterruptedException;
+
+    List<AttractionDto> getAttractions();
 
     List<UserReward> getUserRewards(User user);
 
     User getUser(String userName);
 
     List<User> getAllUsers();
-
-    List<AttractionDto> getAllAttractions();
-
 }

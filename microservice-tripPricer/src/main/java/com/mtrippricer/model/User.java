@@ -2,13 +2,11 @@ package com.mtrippricer.model;
 
 import com.mtrippricer.dto.VisitedLocationDto;
 import lombok.Getter;
-import lombok.ToString;
 import tripPricer.Provider;
 
 import java.util.*;
 
 @Getter
-@ToString
 public class User {
     private final UUID userId;
     private final String userName;
@@ -25,6 +23,14 @@ public class User {
         this.userName = userName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
+    }
+
+    public User(UUID userId, String userName, String phoneNumber, String emailAddress, UserPreferences userPreferences) {
+        this.userId = userId;
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.userPreferences = userPreferences;
     }
 
     public List<VisitedLocationDto> getVisitedLocations() {

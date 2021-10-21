@@ -20,12 +20,15 @@ import java.util.stream.Collectors;
 public class LocationServiceImpl implements LocationService {
     private Logger logger = LoggerFactory.getLogger(LocationServiceImpl.class);
 
-    @Autowired
-    MicroserviceUsersProxy microserviceUsersProxy;
+    private final MicroserviceUsersProxy microserviceUsersProxy;
+
+    private final MicroserviceTrackerProxy microserviceTrackerProxy;
 
     @Autowired
-    MicroserviceTrackerProxy microserviceTrackerProxy;
-
+    public LocationServiceImpl(MicroserviceUsersProxy microserviceUsersProxy, MicroserviceTrackerProxy microserviceTrackerProxy) {
+        this.microserviceUsersProxy = microserviceUsersProxy;
+        this.microserviceTrackerProxy = microserviceTrackerProxy;
+    }
 
     @Override
     public VisitedLocationDto getUserLocation(User user) {

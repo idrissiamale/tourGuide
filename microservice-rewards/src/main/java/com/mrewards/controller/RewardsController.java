@@ -3,6 +3,7 @@ package com.mrewards.controller;
 import com.mrewards.Rewards.Rewards;
 import com.mrewards.model.User;
 import com.mrewards.model.UserReward;
+import com.mrewards.service.RewardCentralService;
 import com.mrewards.service.RewardsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +23,14 @@ public class RewardsController {
     private RewardsService rewardsService;
 
     @Autowired
+    private RewardCentralService rewardCentralService;
+
+    @Autowired
     private Rewards rewards;
 
-    public RewardsController(RewardsService rewardsService, Rewards rewards) {
+    public RewardsController(RewardsService rewardsService, RewardCentralService rewardCentralService, Rewards rewards) {
         this.rewardsService = rewardsService;
+        this.rewardCentralService = rewardCentralService;
         this.rewards = rewards;
     }
 

@@ -55,7 +55,7 @@ public class AttractionServiceImpl implements AttractionService {
         for (Attraction attraction : attractions) {
             attractionDtoList.add(new AttractionDto(attraction.latitude, attraction.longitude, attraction.attractionName, attraction.city, attraction.state, attraction.attractionId));
         }
-        logger.info("Successfully fetched attractions.");
+        //logger.info("Successfully fetched attractions.");
         return attractionDtoList;
     }
 

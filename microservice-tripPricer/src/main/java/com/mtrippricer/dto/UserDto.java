@@ -1,32 +1,43 @@
-package com.mrewards.model;
+package com.mtrippricer.dto;
 
-import com.google.common.collect.ImmutableList;
-import com.mrewards.dto.VisitedLocationDto;
+import com.mtrippricer.model.UserPreferences;
+import com.mtrippricer.model.UserReward;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
+import tripPricer.Provider;
 
 import java.util.*;
 
 @Getter
-@ToString
-public class User {
-    private final UUID userId;
-    private final String userName;
+@NoArgsConstructor
+public class UserDto {
+    private UUID userId;
+    private String userName;
     private String phoneNumber;
     private String emailAddress;
     private Date latestLocationTimestamp;
     private List<VisitedLocationDto> visitedLocations = new ArrayList<>();
     private List<UserReward> userRewards = new ArrayList<>();
+    private UserPreferences userPreferences = new UserPreferences();
+    private List<Provider> tripDeals = new ArrayList<>();
 
-    public User(UUID userId, String userName, String phoneNumber, String emailAddress) {
+    public UserDto(UUID userId, String userName, String phoneNumber, String emailAddress) {
         this.userId = userId;
         this.userName = userName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
     }
 
+    public UserDto(UUID userId, String userName, String phoneNumber, String emailAddress, UserPreferences userPreferences) {
+        this.userId = userId;
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.userPreferences = userPreferences;
+    }
+
     public List<VisitedLocationDto> getVisitedLocations() {
-        return ImmutableList.copyOf(visitedLocations);
+        return Collections.unmodifiableList(visitedLocations);
     }
 
     public void addToVisitedLocations(VisitedLocationDto visitedLocation) {
@@ -47,14 +58,21 @@ public class User {
         return getLastVisitedLocation().getTimeVisited();
     }
 
-
     public List<UserReward> getUserRewards() {
-        return ImmutableList.copyOf(userRewards);
+        return Collections.unmodifiableList(userRewards);
     }
 
     public void addUserReward(UserReward userReward) {
         synchronized (this) {
             userRewards.add(userReward);
         }
+    }
+
+    public List<Provider> getTripDeals() {
+        return Collections.unmodifiableList(tripDeals);
+    }
+
+    public void setTripDeals(List<Provider> tripDeals) {
+        this.tripDeals = tripDeals;
     }
 }
