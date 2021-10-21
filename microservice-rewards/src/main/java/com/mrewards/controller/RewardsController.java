@@ -42,7 +42,7 @@ public class RewardsController {
     }
 
     @GetMapping("/getRewards")
-    public List<UserReward> getRewards(@RequestParam String userName) {
+    public List<UserReward> getRewards(@RequestParam String userName) throws ExecutionException, InterruptedException {
         user = rewardsService.getUser(userName);
         return rewardsService.getUserRewards(user);
     }
