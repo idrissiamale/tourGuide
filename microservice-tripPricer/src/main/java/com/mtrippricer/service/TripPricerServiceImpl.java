@@ -2,8 +2,6 @@ package com.mtrippricer.service;
 
 import com.mtrippricer.dto.UserDto;
 import com.mtrippricer.model.UserReward;
-import com.mtrippricer.proxies.MicroserviceAttractionProxy;
-import com.mtrippricer.proxies.MicroserviceUsersProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +19,6 @@ public class TripPricerServiceImpl implements TripPricerService {
     @Autowired
     private TripPricer tripPricer;
 
-    @Autowired
-    MicroserviceUsersProxy microserviceUsersProxy;
-
-    @Autowired
-    MicroserviceAttractionProxy microserviceAttractionProxy;
-
     public TripPricerServiceImpl(TripPricer tripPricer) {
         this.tripPricer = tripPricer;
     }
@@ -39,11 +31,6 @@ public class TripPricerServiceImpl implements TripPricerService {
         List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), adults, children, nightsStay, getCumulativeRewardsPoints(user));
         user.setTripDeals(providers);
         return providers;
-    }
-
-    @Override
-    public UserDto getUser(String userName) {
-        return microserviceUsersProxy.getUser(userName);
     }
 
     private int getCumulativeRewardsPoints(UserDto user) {

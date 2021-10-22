@@ -1,7 +1,8 @@
 package com.mtrippricer.controller;
 
 import com.mtrippricer.dto.UserDto;
-import com.mtrippricer.service.TripPricerServiceImpl;
+import com.mtrippricer.proxies.MicroserviceUsersProxy;
+import com.mtrippricer.service.TripPricerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,12 +14,19 @@ import java.util.List;
 @RestController
 public class TripPricerController {
     @Autowired
-    TripPricerServiceImpl tripPricerService;
+    MicroserviceUsersProxy microserviceUsersProxy;
+    @Autowired
+    TripPricerService tripPricerService;
 
+
+    public TripPricerController(MicroserviceUsersProxy microserviceUsersProxy, TripPricerService tripPricerService) {
+        this.microserviceUsersProxy = microserviceUsersProxy;
+        this.tripPricerService = tripPricerService;
+    }
 
     @GetMapping(value = "/getTripDeals")
     public List<Provider> getTripDeals(@RequestParam String userName) {
-        UserDto user = tripPricerService.getUser(userName);
+        UserDto user = microserviceUsersProxy.getUser(userName);
         return tripPricerService.getTripDeals(user);
     }
 }

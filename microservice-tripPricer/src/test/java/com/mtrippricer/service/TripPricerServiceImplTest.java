@@ -1,8 +1,6 @@
-package com.mtrippricer;
+package com.mtrippricer.service;
 
 import com.mtrippricer.dto.UserDto;
-import com.mtrippricer.model.UserPreferences;
-import com.mtrippricer.service.TripPricerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tripPricer.Provider;
@@ -15,11 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TripPricerServiceImplTest {
     private TripPricerServiceImpl tripPricerServiceImpl;
-    private TripPricer tripPricer;
 
     @BeforeEach
     public void setUp() {
-        tripPricer = new TripPricer();
+        TripPricer tripPricer = new TripPricer();
         tripPricerServiceImpl = new TripPricerServiceImpl(tripPricer);
     }
 
@@ -30,17 +27,5 @@ public class TripPricerServiceImplTest {
         List<Provider> providers = tripPricerServiceImpl.getTripDeals(user);
 
         assertEquals(5, providers.size());
-    }
-
-    @Test
-    public void checkerPreferencesUser() {
-        UserPreferences userPreferences = new UserPreferences();
-        userPreferences.setNumberOfChildren(3);
-        userPreferences.setTripDuration(1);
-        UserDto user = new UserDto(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com", userPreferences);
-
-        List<Provider> providers = tripPricerServiceImpl.getTripDeals(user);
-
-        System.out.println(providers.get(0).price);
     }
 }

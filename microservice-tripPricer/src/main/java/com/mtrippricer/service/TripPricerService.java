@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface TripPricerService {
     List<Provider> getTripDeals(UserDto user);
-
-    UserDto getUser(String userName);
 }
