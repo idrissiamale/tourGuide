@@ -63,5 +63,4 @@ public class TripPricerControllerTest {
 
         verify(tripPricerService).getTripDeals(user);
     }
-
 }
