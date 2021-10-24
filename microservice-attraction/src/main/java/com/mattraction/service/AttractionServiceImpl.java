@@ -60,7 +60,7 @@ public class AttractionServiceImpl implements AttractionService {
         logger.info("Successfully fetched attractions.");
         return attractionDtoList;
     }
-    
+
     private List<AttractionInfo> getTheClosestFiveAttractions(User user, LocationDto userLocation) {
         return getAttractionsInfo(user, userLocation).stream().limit(5).collect(Collectors.toList());
     }

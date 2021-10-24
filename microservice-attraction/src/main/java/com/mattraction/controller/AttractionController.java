@@ -3,6 +3,7 @@ package com.mattraction.controller;
 import com.mattraction.dto.AttractionDto;
 import com.mattraction.dto.UserInfo;
 import com.mattraction.model.User;
+import com.mattraction.proxies.MicroserviceUsersProxy;
 import com.mattraction.service.AttractionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,15 +18,18 @@ import java.util.List;
 public class AttractionController {
     private Logger logger = LoggerFactory.getLogger(AttractionController.class);
     @Autowired
-    AttractionService attractionService;
+    MicroserviceUsersProxy microserviceUsersProxy;
+    @Autowired
+    private AttractionService attractionService;
 
-    public AttractionController(AttractionService attractionService) {
+    public AttractionController(MicroserviceUsersProxy microserviceUsersProxy, AttractionService attractionService) {
+        this.microserviceUsersProxy = microserviceUsersProxy;
         this.attractionService = attractionService;
     }
 
     @GetMapping(value = "/getNearbyAttractions")
     public UserInfo getNearbyAttractions(@RequestParam String userName) {
-        User user = attractionService.getUser(userName);
+        User user = microserviceUsersProxy.getUser(userName);
         logger.info("User's nearby attractions found successfully.");
         return attractionService.getNearbyAttractions(user);
     }
@@ -33,7 +37,7 @@ public class AttractionController {
 
     @GetMapping(value = "/getAllAttractions")
     public List<AttractionDto> getAllAttractions() {
-        //logger.info("TourGuide attractions found successfully.");
+        logger.info("TourGuide attractions found successfully.");
         return attractionService.getAttractions();
     }
 }

@@ -57,6 +57,7 @@ public class AttractionServiceImplTest {
         when(microserviceUserLocationsProxy.getLocation(user.getUserName())).thenReturn(attraction);
 
         UserInfo userInfo = attractionService.getNearbyAttractions(user);
+        System.out.println(userInfo);
 
         assertEquals(5, userInfo.getNearbyAttractions().size());
     }
