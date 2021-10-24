@@ -60,13 +60,7 @@ public class AttractionServiceImpl implements AttractionService {
         logger.info("Successfully fetched attractions.");
         return attractionDtoList;
     }
-
-    @Override
-    public User getUser(String userName) {
-        logger.info("Successfully fetched user data.");
-        return microserviceUsersProxy.getUser(userName);
-    }
-
+    
     private List<AttractionInfo> getTheClosestFiveAttractions(User user, LocationDto userLocation) {
         return getAttractionsInfo(user, userLocation).stream().limit(5).collect(Collectors.toList());
     }

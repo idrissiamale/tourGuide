@@ -10,6 +10,4 @@ public interface AttractionService {
     UserInfo getNearbyAttractions(User user);
 
     List<AttractionDto> getAttractions();
-
-    User getUser(String userName);
 }
