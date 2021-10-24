@@ -1,4 +1,4 @@
-package com.mattraction;
+package com.mattraction.integration;
 
 import com.mattraction.controller.AttractionController;
 import com.mattraction.dto.AttractionDto;

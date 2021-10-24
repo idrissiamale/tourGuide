@@ -1,8 +1,7 @@
-package com.mattraction;
+package com.mattraction.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mattraction.controller.AttractionController;
 import com.mattraction.dto.AttractionDto;
 import com.mattraction.dto.AttractionInfo;
 import com.mattraction.dto.UserInfo;

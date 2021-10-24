@@ -1,10 +1,9 @@
-package com.mattraction;
+package com.mattraction.service;
 
 import com.mattraction.dto.AttractionDto;
 import com.mattraction.dto.UserInfo;
 import com.mattraction.model.User;
 import com.mattraction.proxies.MicroserviceUserLocationsProxy;
-import com.mattraction.service.AttractionServiceImpl;
 import gpsUtil.GpsUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
