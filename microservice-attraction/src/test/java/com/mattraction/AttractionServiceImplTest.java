@@ -1,50 +1,83 @@
 package com.mattraction;
 
 import com.mattraction.dto.AttractionDto;
-import com.mattraction.dto.LocationDto;
+import com.mattraction.dto.UserInfo;
 import com.mattraction.model.User;
 import com.mattraction.proxies.MicroserviceUserLocationsProxy;
-import com.mattraction.proxies.MicroserviceUsersProxy;
 import com.mattraction.service.AttractionServiceImpl;
 import gpsUtil.GpsUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import rewardCentral.RewardCentral;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
 public class AttractionServiceImplTest {
     private AttractionServiceImpl attractionService;
-
-    @Autowired
-    private GpsUtil gpsUtil;
     private User user;
-    @Autowired
-    private MicroserviceUsersProxy microserviceUsersProxy;
 
-    @Autowired
+    @Mock
     private MicroserviceUserLocationsProxy microserviceUserLocationsProxy;
 
 
     @BeforeEach
     public void setUp() {
-        Locale.setDefault(Locale.US);
-        gpsUtil = new GpsUtil();
-        attractionService = new AttractionServiceImpl(gpsUtil, rewardsCentral);
+        GpsUtil gpsUtil = new GpsUtil();
+        RewardCentral rewardCentral = new RewardCentral();
+        attractionService = new AttractionServiceImpl(gpsUtil, rewardCentral, microserviceUserLocationsProxy);
         user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
     }
 
 
     @Test
-    public void getUserLocation() {
-        LocationDto locationDto = new LocationDto( -116.603649,  34.761573);
-        System.out.println(locationDto);
+    public void shouldReturnAllAttractions() {
+        List<AttractionDto> attractions = attractionService.getAttractions();
 
-        List<AttractionDto> attractions = attractionService.getNearByAttractions(locationDto);
+        assertEquals(26, attractions.size());
+    }
 
-        System.out.println(attractions);
+    @Test
+    public void shouldReturnTheSameName() {
+        List<AttractionDto> attractions = attractionService.getAttractions();
 
+        assertEquals("Disneyland", attractions.get(0).getAttractionName());
+    }
+
+    @Test
+    public void shouldReturnTheClosestFiveAttractions() {
+        AttractionDto attraction = attractionService.getAttractions().get(0);
+        when(microserviceUserLocationsProxy.getLocation(user.getUserName())).thenReturn(attraction);
+
+        UserInfo userInfo = attractionService.getNearbyAttractions(user);
+
+        assertEquals(5, userInfo.getNearbyAttractions().size());
+    }
+
+    @Test
+    public void shouldReturnTheClosestAttractionOfFive() {
+        AttractionDto attraction = attractionService.getAttractions().get(0);
+        when(microserviceUserLocationsProxy.getLocation(user.getUserName())).thenReturn(attraction);
+
+        UserInfo userInfo = attractionService.getNearbyAttractions(user);
+
+        assertEquals("Disneyland", userInfo.getNearbyAttractions().get(0).getName());
+    }
+
+    @Test
+    public void shouldReturnTheSameDistance() {
+        AttractionDto attraction = attractionService.getAttractions().get(0);
+        when(microserviceUserLocationsProxy.getLocation(user.getUserName())).thenReturn(attraction);
+
+        UserInfo userInfo = attractionService.getNearbyAttractions(user);
+
+        assertEquals(0.0, userInfo.getNearbyAttractions().get(0).getDistance());
     }
 }
