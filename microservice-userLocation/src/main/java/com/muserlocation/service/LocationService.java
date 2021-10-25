@@ -4,16 +4,12 @@ import com.muserlocation.dto.CurrentLocationDto;
 import com.muserlocation.dto.VisitedLocationDto;
 import com.muserlocation.model.User;
 
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public interface LocationService {
     VisitedLocationDto getUserLocation(User user);
 
-    VisitedLocationDto trackUserLocation(User user);
-
-    List<CurrentLocationDto> getAllUsersCurrentLocations();
+    CopyOnWriteArrayList<CurrentLocationDto> getAllUsersCurrentLocations();
 
     User getUser(String userName);
-
-    List<User> getAllUsers();
 }

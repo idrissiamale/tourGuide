@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @RestController
 public class LocationController {
-
     @Autowired
     private LocationService locationService;
-
 
     public LocationController(LocationService locationService) {
         this.locationService = locationService;
@@ -31,7 +29,7 @@ public class LocationController {
     }
 
     @GetMapping(value ="/getAllCurrentLocations")
-    public List<CurrentLocationDto> getAllCurrentLocations() {
+    public CopyOnWriteArrayList<CurrentLocationDto> getAllCurrentLocations() {
         return locationService.getAllUsersCurrentLocations();
     }
 

@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -40,10 +40,13 @@ public class User {
     }
 
     public VisitedLocationDto getLastVisitedLocation() {
-        return visitedLocations.get(visitedLocations.size() - 1);
+        return getVisitedLocations()
+                .stream()
+                .filter(visitedLocationDto -> visitedLocationDto.getTimeVisited().equals(getLatestLocationTimestamp())).findFirst().get();
     }
 
-    public VisitedLocationDto getVisitedLocation() {
-        return visitedLocations.get(0);
+    public Date getLatestLocationTimestamp() {
+        List<Date> dates = getVisitedLocations().stream().map(VisitedLocationDto::getTimeVisited).collect(Collectors.toList());
+        return Collections.max(dates);
     }
 }
