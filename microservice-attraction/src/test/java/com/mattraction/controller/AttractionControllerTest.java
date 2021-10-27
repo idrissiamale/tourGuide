@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -102,7 +103,7 @@ public class AttractionControllerTest {
     @Test
     public void shouldReturn200WhenAttractionsAreFound() throws Exception {
         List<Attraction> attractions = gpsUtil.getAttractions();
-        List<AttractionDto> attractionDtoList = new ArrayList<>();
+        CopyOnWriteArrayList<AttractionDto> attractionDtoList = new CopyOnWriteArrayList<>();
         for (Attraction attraction : attractions) {
             attractionDtoList.add(new AttractionDto(attraction.latitude, attraction.longitude, attraction.attractionName, attraction.city, attraction.state, attraction.attractionId));
         }
@@ -120,7 +121,7 @@ public class AttractionControllerTest {
     @Test
     public void shouldReturnAllAttractionsWhenTheyAreFound() throws Exception {
         List<Attraction> attractions = gpsUtil.getAttractions();
-        List<AttractionDto> attractionDtoList = new ArrayList<>();
+        CopyOnWriteArrayList<AttractionDto> attractionDtoList = new CopyOnWriteArrayList<>();
         for (Attraction attraction : attractions) {
             attractionDtoList.add(new AttractionDto(attraction.latitude, attraction.longitude, attraction.attractionName, attraction.city, attraction.state, attraction.attractionId));
         }

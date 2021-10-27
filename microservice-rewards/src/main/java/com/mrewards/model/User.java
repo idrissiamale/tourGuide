@@ -38,10 +38,6 @@ public class User {
         visitedLocations.clear();
     }
 
-    public VisitedLocationDto getLastVisitedLocation() {
-        return visitedLocations.get(visitedLocations.size() - 1);
-    }
-
     public CopyOnWriteArrayList<UserReward> getUserRewards() {
         return userRewards;
     }

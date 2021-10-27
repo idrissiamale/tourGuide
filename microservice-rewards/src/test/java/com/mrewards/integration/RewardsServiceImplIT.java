@@ -1,14 +1,10 @@
-package com.mrewards;
+package com.mrewards.integration;
 
 import com.mrewards.dto.AttractionDto;
 import com.mrewards.dto.VisitedLocationDto;
 import com.mrewards.model.User;
-import com.mrewards.proxies.MicroserviceAttractionProxy;
-import com.mrewards.proxies.MicroserviceUsersProxy;
-import com.mrewards.service.RewardCentralService;
-import com.mrewards.service.RewardsServiceImpl;
+import com.mrewards.service.RewardsService;
 import org.apache.commons.lang3.time.StopWatch;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,31 +19,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RewardsTest {
-    private RewardsServiceImpl rewardsService;
-
-    @Autowired
-    private ThreadPoolTaskExecutor taskExecutorRewardsPoint;
-
+public class RewardsServiceImplIT {
     @Autowired
     private ThreadPoolTaskExecutor taskExecutor;
 
     @Autowired
-    private RewardCentralService rewardCentralService;
-
-    @Autowired
-    MicroserviceAttractionProxy microserviceAttractionProxy;
-
-    @Autowired
-    MicroserviceUsersProxy microserviceUsersProxy;
-
-    @BeforeEach
-    public void setUp() {
-        rewardsService = new RewardsServiceImpl(rewardCentralService, microserviceAttractionProxy, microserviceUsersProxy);
-    }
+    private RewardsService rewardsService;
 
     @Test
-    public void testClass() throws InterruptedException, ExecutionException {
+    public void shouldGetUserRewardsFor100000UsersInLessThan20Minutes() throws InterruptedException, ExecutionException {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         AttractionDto attraction = rewardsService.getAllAttractions().get(0);
@@ -61,8 +41,8 @@ public class RewardsTest {
             rewardsService.calculateRewards(user);
         }
 
-        for(User user : users) {
-            while(user.getUserRewards().isEmpty()) {
+        for (User user : users) {
+            while (user.getUserRewards().isEmpty()) {
                 try {
                     this.taskExecutor.getThreadPoolExecutor().awaitTermination(200, TimeUnit.MILLISECONDS);
                 } catch (InterruptedException e) {
@@ -71,8 +51,7 @@ public class RewardsTest {
         }
 
         stopWatch.stop();
-        for(User user : users) {
-            //System.out.println(user.getUserRewards().size());
+        for (User user : users) {
             assertEquals(1, rewardsService.getUserRewards(user).size());
         }
         System.out.println("highVolumeGetRewards: Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");

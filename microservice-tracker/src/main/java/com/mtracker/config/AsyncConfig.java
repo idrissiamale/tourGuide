@@ -15,8 +15,8 @@ public class AsyncConfig {
     @Bean(name = "taskExecutorGpsUtil")
     public Executor taskExecutorGpsUtil() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(30);
-        executor.setMaxPoolSize(40);
+        executor.setCorePoolSize(60);
+        executor.setMaxPoolSize(70);
         executor.setQueueCapacity(1000);
         executor.setKeepAliveSeconds(60);
         executor.setWaitForTasksToCompleteOnShutdown(true);

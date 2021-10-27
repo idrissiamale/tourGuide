@@ -4,7 +4,10 @@ import com.mtrippricer.dto.VisitedLocationDto;
 import lombok.Getter;
 import tripPricer.Provider;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
 public class User {
@@ -23,50 +26,6 @@ public class User {
         this.userName = userName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
-    }
-
-    public User(UUID userId, String userName, String phoneNumber, String emailAddress, UserPreferences userPreferences) {
-        this.userId = userId;
-        this.userName = userName;
-        this.phoneNumber = phoneNumber;
-        this.emailAddress = emailAddress;
-        this.userPreferences = userPreferences;
-    }
-
-    public List<VisitedLocationDto> getVisitedLocations() {
-        return Collections.unmodifiableList(visitedLocations);
-    }
-
-    public void addToVisitedLocations(VisitedLocationDto visitedLocation) {
-        synchronized (this) {
-            visitedLocations.add(visitedLocation);
-        }
-    }
-
-    public void clearVisitedLocations() {
-        visitedLocations.clear();
-    }
-
-    public VisitedLocationDto getLastVisitedLocation() {
-        return visitedLocations.get(visitedLocations.size() - 1);
-    }
-
-    public Date getLatestLocationTimestamp() {
-        return getLastVisitedLocation().getTimeVisited();
-    }
-
-    public List<UserReward> getUserRewards() {
-        return Collections.unmodifiableList(userRewards);
-    }
-
-    public void addUserReward(UserReward userReward) {
-        synchronized (this) {
-            userRewards.add(userReward);
-        }
-    }
-
-    public List<Provider> getTripDeals() {
-        return Collections.unmodifiableList(tripDeals);
     }
 
     public void setTripDeals(List<Provider> tripDeals) {

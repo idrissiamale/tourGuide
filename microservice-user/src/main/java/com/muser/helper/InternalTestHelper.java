@@ -3,7 +3,7 @@ package com.muser.helper;
 public class InternalTestHelper {
 
     // Set this default up to 100,000 for testing
-    private static int internalUserNumber = 1000;
+    private static int internalUserNumber = 100000;
 
     public static void setInternalUserNumber(int internalUserNumber) {
         InternalTestHelper.internalUserNumber = internalUserNumber;

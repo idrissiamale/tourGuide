@@ -3,7 +3,6 @@ package com.mtrippricer.dto;
 import lombok.*;
 
 @Getter
-@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

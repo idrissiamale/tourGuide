@@ -1,6 +1,6 @@
 package com.mtrippricer.service;
 
-import com.mtrippricer.dto.UserDto;
+import com.mtrippricer.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tripPricer.Provider;
@@ -22,7 +22,7 @@ public class TripPricerServiceImplTest {
 
     @Test
     public void getTripDeals() {
-        UserDto user = new UserDto(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
+        User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 
         List<Provider> providers = tripPricerServiceImpl.getTripDeals(user);
 

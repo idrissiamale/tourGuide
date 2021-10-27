@@ -1,6 +1,6 @@
 package com.mtrippricer.controller;
 
-import com.mtrippricer.dto.UserDto;
+import com.mtrippricer.model.User;
 import com.mtrippricer.proxies.MicroserviceUsersProxy;
 import com.mtrippricer.service.TripPricerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class TripPricerController {
 
     @GetMapping(value = "/getTripDeals")
     public List<Provider> getTripDeals(@RequestParam String userName) {
-        UserDto user = microserviceUsersProxy.getUser(userName);
+        User user = microserviceUsersProxy.getUser(userName);
         return tripPricerService.getTripDeals(user);
     }
 }

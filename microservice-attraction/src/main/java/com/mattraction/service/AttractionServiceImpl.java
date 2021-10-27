@@ -6,7 +6,6 @@ import com.mattraction.dto.LocationDto;
 import com.mattraction.dto.UserInfo;
 import com.mattraction.model.User;
 import com.mattraction.proxies.MicroserviceUserLocationsProxy;
-import com.mattraction.proxies.MicroserviceUsersProxy;
 import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import org.slf4j.Logger;
@@ -18,6 +17,7 @@ import rewardCentral.RewardCentral;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,9 +29,6 @@ public class AttractionServiceImpl implements AttractionService {
 
     @Autowired
     private RewardCentral rewardsCentral;
-
-    @Autowired
-    MicroserviceUsersProxy microserviceUsersProxy;
 
     @Autowired
     MicroserviceUserLocationsProxy microserviceUserLocationsProxy;
@@ -51,9 +48,9 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public List<AttractionDto> getAttractions() {
+    public CopyOnWriteArrayList<AttractionDto> getAttractions() {
         List<Attraction> attractions = gpsUtil.getAttractions();
-        List<AttractionDto> attractionDtoList = new ArrayList<>();
+        CopyOnWriteArrayList<AttractionDto> attractionDtoList = new CopyOnWriteArrayList<>();
         for (Attraction attraction : attractions) {
             attractionDtoList.add(new AttractionDto(attraction.latitude, attraction.longitude, attraction.attractionName, attraction.city, attraction.state, attraction.attractionId));
         }

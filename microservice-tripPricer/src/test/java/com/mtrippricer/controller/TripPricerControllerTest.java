@@ -1,7 +1,7 @@
 package com.mtrippricer.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mtrippricer.dto.UserDto;
+import com.mtrippricer.model.User;
 import com.mtrippricer.proxies.MicroserviceUsersProxy;
 import com.mtrippricer.service.TripPricerService;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +43,7 @@ public class TripPricerControllerTest {
 
     @Test
     public void shouldReturnTripDealsWhenUserIsFound() throws Exception {
-        UserDto user = new UserDto(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
+        User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
         String tripPricerApiKey = "test-server-api-key";
         int adults = 1;
         int children = 2;

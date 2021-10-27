@@ -13,10 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 @Service
@@ -31,40 +29,21 @@ public class TrackerServiceImpl implements TrackerService {
     @Autowired
     MicroserviceRewardsProxy microserviceRewardsProxy;
 
-
-    private static final long trackingPollingInterval = TimeUnit.MINUTES.toSeconds(5);
-
-    public TrackerServiceImpl(GpsUtil gpsUtil) {
+    public TrackerServiceImpl(GpsUtil gpsUtil, MicroserviceUsersProxy microserviceUsersProxy, MicroserviceRewardsProxy microserviceRewardsProxy) {
         this.gpsUtil = gpsUtil;
+        this.microserviceUsersProxy = microserviceUsersProxy;
+        this.microserviceRewardsProxy = microserviceRewardsProxy;
     }
 
     @Async(value = "taskExecutorGpsUtil")
     @Override
     public CompletableFuture<VisitedLocationDto> trackUserLocation(User user) {
         VisitedLocationDto visitedLocationDto = getVisitedLocation(user);
-        calculateRewards(user);
+        microserviceRewardsProxy.calculateRewards(user.getUserName());
         return CompletableFuture.completedFuture(visitedLocationDto);
     }
 
-    private void calculateRewards(User user) {
-        microserviceRewardsProxy.calculateRewards(user.getUserName());
-    }
-
-    //public CompletableFuture<List<VisitedLocationDto>> trackUsersLocations() {
-    //List<User> users = getAllUsers();
-    //logger.info("Request to get a list of visitedLocations");
-    //final List<VisitedLocationDto> visitedLocations = new ArrayList<>();
-    //for (User user : users) {
-    //VisitedLocationDto visitedLocation = trackUserLocation(user);
-    //visitedLocations.add(new VisitedLocationDto(visitedLocation.getUserId(), visitedLocation.getLocationDto(), visitedLocation.getTimeVisited()));
-    // }
-    //return CompletableFuture.completedFuture(visitedLocations);
-    //}
-
-
     private VisitedLocationDto getVisitedLocation(User user) {
-        Locale locale = new Locale("en_US");
-        Locale.setDefault(locale);
         VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
         LocationDto locationDto = new LocationDto(visitedLocation.location.longitude, visitedLocation.location.latitude);
         VisitedLocationDto visitedLocationDto = new VisitedLocationDto(visitedLocation.userId, locationDto, visitedLocation.timeVisited);
@@ -78,7 +57,7 @@ public class TrackerServiceImpl implements TrackerService {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public CopyOnWriteArrayList<User> getAllUsers() {
         return microserviceUsersProxy.getAllUsers();
     }
 }

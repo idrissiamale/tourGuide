@@ -1,6 +1,6 @@
 package com.mtrippricer.service;
 
-import com.mtrippricer.dto.UserDto;
+import com.mtrippricer.model.User;
 import com.mtrippricer.model.UserReward;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public class TripPricerServiceImpl implements TripPricerService {
     }
 
     @Override
-    public List<Provider> getTripDeals(UserDto user) {
+    public List<Provider> getTripDeals(User user) {
         int adults = user.getUserPreferences().getNumberOfAdults();
         int children = user.getUserPreferences().getNumberOfChildren();
         int nightsStay = user.getUserPreferences().getTripDuration();
@@ -33,7 +33,7 @@ public class TripPricerServiceImpl implements TripPricerService {
         return providers;
     }
 
-    private int getCumulativeRewardsPoints(UserDto user) {
+    private int getCumulativeRewardsPoints(User user) {
         return user.getUserRewards().stream().mapToInt(UserReward::getRewardPoints).sum();
     }
 }

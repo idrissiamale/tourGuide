@@ -3,8 +3,8 @@ package com.mtracker.service;
 import com.mtracker.dto.VisitedLocationDto;
 import com.mtracker.model.User;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 
 public interface TrackerService {
@@ -12,7 +12,7 @@ public interface TrackerService {
 
     User getUser(String userName);
 
-    List<User> getAllUsers();
+    CopyOnWriteArrayList<User> getAllUsers();
 
     //void trackAllUsers();
 

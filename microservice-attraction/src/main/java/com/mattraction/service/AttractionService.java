@@ -4,10 +4,10 @@ import com.mattraction.dto.AttractionDto;
 import com.mattraction.dto.UserInfo;
 import com.mattraction.model.User;
 
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public interface AttractionService {
     UserInfo getNearbyAttractions(User user);
 
-    List<AttractionDto> getAttractions();
+    CopyOnWriteArrayList<AttractionDto> getAttractions();
 }
