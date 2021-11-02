@@ -71,6 +71,7 @@
             <option value="$PROJECT_DIR$/microservice-user" />
           </set>
         </option>
+        <option name="useAutoImport" value="true" />
         <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
       <GradleProjectSettings>
