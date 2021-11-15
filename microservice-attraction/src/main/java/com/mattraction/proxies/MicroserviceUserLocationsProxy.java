@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * A class which permits to consume, with Feign client, the REST services exposed by UserLocation microservice.
+ * An interface which permits to consume, with Feign client, the REST services exposed by UserLocation microservice.
  */
 @FeignClient(name = "microservice-userLocation", url = "localhost:8083")
 public interface MicroserviceUserLocationsProxy {

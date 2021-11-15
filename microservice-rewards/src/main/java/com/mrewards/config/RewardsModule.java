@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import rewardCentral.RewardCentral;
 
 /**
- * Configuration's class which permits to instantiate RewardsCentral API and to use it throughout the application.
+ * Configuration's class which permits to instantiate RewardsCentral API in order to use it throughout the application.
  *
  * @see rewardCentral.RewardCentral
  */

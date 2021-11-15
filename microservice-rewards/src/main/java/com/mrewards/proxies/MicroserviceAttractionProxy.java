@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * A class which permits to consume, with Feign client, the REST services exposed by Attraction microservice.
+ * An interface which permits to consume, with Feign client, the REST services exposed by Attraction microservice.
  */
 @FeignClient(name = "microservice-attraction", url = "localhost:8084")
 public interface MicroserviceAttractionProxy {

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * A class which permits to consume, with Feign client, the REST services exposed by User microservice.
+ * An interface which permits to consume, with Feign client, the REST services exposed by User microservice.
  */
 @FeignClient(name = "microservice-user", url = "localhost:8081")
 public interface MicroserviceUsersProxy {
