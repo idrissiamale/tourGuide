@@ -1,10 +1,12 @@
 package com.muserlocation.dto;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * A DTO class which represents a location, a place with its latitude and longitude.
+ */
 @Getter
 @NoArgsConstructor
 @ToString

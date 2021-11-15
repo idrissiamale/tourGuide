@@ -7,6 +7,7 @@ import com.muserlocation.model.User;
 import com.muserlocation.proxies.MicroserviceTrackerProxy;
 import com.muserlocation.proxies.MicroserviceUsersProxy;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -47,6 +48,7 @@ public class LocationServiceImplTest {
 
 
     @Test
+    @DisplayName("Checking that when user has stored location history his last visited location is fetched")
     public void shouldGetTheLastVisitedLocationWhenUserHasVisitedLocationsHistory() {
         LocationDto location = new LocationDto(-85.05112878, -180);
         user.addToVisitedLocations(new VisitedLocationDto(user.getUserId(), location, new Date()));
@@ -57,6 +59,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
+    @DisplayName("Checking that when user does not have stored location history then his location is tracked")
     public void shouldTrackUserLocationWhenUserDoesNotHaveVisitedLocationsHistory() {
         LocationDto location = new LocationDto(-85.05112878, -180);
         VisitedLocationDto visitedLocation = new VisitedLocationDto(user.getUserId(), location, new Date());
@@ -68,6 +71,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
+    @DisplayName("Checking that the method is working correctly and returns the current locations of all the users")
     public void shouldReturnAllCurrentUsersLocations() {
         generateUserLocationHistory(user);
         generateUserLocationHistory(user2);
@@ -87,30 +91,8 @@ public class LocationServiceImplTest {
         assertEquals(currentLocations.get(0).getLocationDto(), usersCurrentLocations.get(0).getLocationDto());
     }
 
-    @Test
-    public void shouldReturnTheMostRecentUserLocation() {
-        generateUserLocationHistory(user);
-        generateUserLocationHistory(user2);
-        generateUserLocationHistory(user3);
-        users.add(user);
-        users.add(user2);
-        users.add(user3);
-        when(microserviceUsersProxy.getAllUsers()).thenReturn(users);
-
-        for (User user : users) {
-            VisitedLocationDto currentUserLocation = user.getLastVisitedLocation();
-            currentLocations.add(new CurrentLocationDto(user.getUserId(), currentUserLocation.getLocationDto()));
-        }
-
-        CopyOnWriteArrayList<CurrentLocationDto> usersCurrentLocations = locationServiceImpl.getAllUsersCurrentLocations();
-
-        assertEquals(user.getLastVisitedLocation().getLocationDto(), usersCurrentLocations.get(0).getLocationDto());
-    }
-
     private void generateUserLocationHistory(User user) {
-        IntStream.range(0, 3).forEach(i -> {
-            user.addToVisitedLocations(new VisitedLocationDto(user.getUserId(), new LocationDto(generateRandomLatitude(), generateRandomLongitude()), getRandomTime()));
-        });
+        IntStream.range(0, 3).forEach(i -> user.addToVisitedLocations(new VisitedLocationDto(user.getUserId(), new LocationDto(generateRandomLatitude(), generateRandomLongitude()), getRandomTime())));
     }
 
     private double generateRandomLongitude() {

@@ -6,6 +6,11 @@ import lombok.ToString;
 
 import java.util.UUID;
 
+/**
+ * A DTO class which represents the current user location and for this, gathers the following user's data : his id and location.
+ *
+ * @see com.muserlocation.dto.LocationDto
+ */
 @Getter
 @NoArgsConstructor
 @ToString

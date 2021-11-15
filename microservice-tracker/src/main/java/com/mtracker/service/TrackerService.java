@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutionException;
 public interface TrackerService {
     /**
      * An asynchronous method which tracks the user location.
-     * If the location is an attraction then reward points are send to the user
+     * If the location is an attraction then reward points are send to the user.
      *
      * @param user, it refers to the registered user.
      * @return the new CompletableFuture.

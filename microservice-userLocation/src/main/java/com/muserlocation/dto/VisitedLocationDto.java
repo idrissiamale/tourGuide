@@ -7,6 +7,11 @@ import lombok.ToString;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * A DTO class which gathers the following user's data : his id, the visited location and the time when he visited it.
+ *
+ * @see com.muserlocation.dto.LocationDto
+ */
 @Getter
 @NoArgsConstructor
 @ToString

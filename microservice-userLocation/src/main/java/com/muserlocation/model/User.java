@@ -9,6 +9,9 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
+/**
+ * A model class which gathers user's id, name, phone number, email but also the locations he visited and the date and time of his visits.
+ */
 @Getter
 @Setter
 @ToString
@@ -33,10 +36,6 @@ public class User {
 
     public void addToVisitedLocations(VisitedLocationDto visitedLocation) {
         visitedLocations.add(visitedLocation);
-    }
-
-    public void clearVisitedLocations() {
-        visitedLocations.clear();
     }
 
     public VisitedLocationDto getLastVisitedLocation() {

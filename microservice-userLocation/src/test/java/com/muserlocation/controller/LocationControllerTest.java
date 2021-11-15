@@ -8,6 +8,7 @@ import com.muserlocation.dto.VisitedLocationDto;
 import com.muserlocation.model.User;
 import com.muserlocation.service.LocationService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -52,6 +53,7 @@ public class LocationControllerTest {
     }
 
     @Test
+    @DisplayName("Checking that the controller returns status code 200 when the user location was correctly fetched")
     public void shouldReturn200WhenUserLocationIsFetched() throws Exception {
         VisitedLocationDto visitedLocationDto = new VisitedLocationDto(user.getUserId(), new LocationDto(-85.05112878, -180), new Date());
         user.addToVisitedLocations(visitedLocationDto);
@@ -70,6 +72,7 @@ public class LocationControllerTest {
     }
 
     @Test
+    @DisplayName("Checking that the controller returns the location of the user with the given username")
     public void shouldReturnUserLocationWhenItsFetched() throws Exception {
         Locale.setDefault(Locale.US);
         LocationDto location = new LocationDto(0.3017730176233755,  -108.9043206024857);
@@ -93,6 +96,7 @@ public class LocationControllerTest {
     }
 
     @Test
+    @DisplayName("Checking that the controller returns status code 200 when all current users location are fetched")
     public void shouldReturn200WhenAllCurrentUsersLocationsAreFetched() throws Exception {
         generateUserLocationHistory(user);
         generateUserLocationHistory(user2);
@@ -116,6 +120,7 @@ public class LocationControllerTest {
     }
 
     @Test
+    @DisplayName("Checking that the controller returns a list with every user's most recent location")
     public void shouldReturnAllCurrentUsersLocationsWhenTheyAreFetched() throws Exception {
         generateUserLocationHistory(user);
         generateUserLocationHistory(user2);
@@ -142,9 +147,7 @@ public class LocationControllerTest {
     }
 
     private void generateUserLocationHistory(User user) {
-        IntStream.range(0, 3).forEach(i -> {
-            user.addToVisitedLocations(new VisitedLocationDto(user.getUserId(), new LocationDto(generateRandomLatitude(), generateRandomLongitude()), getRandomTime()));
-        });
+        IntStream.range(0, 3).forEach(i ->  user.addToVisitedLocations(new VisitedLocationDto(user.getUserId(), new LocationDto(generateRandomLatitude(), generateRandomLongitude()), getRandomTime())));
     }
 
     private double generateRandomLongitude() {
