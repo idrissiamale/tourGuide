@@ -16,7 +16,13 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-
+/**
+ * Implementation of the TrackerService interface.
+ *
+ * @see com.mtracker.proxies.MicroserviceRewardsProxy
+ * @see com.mtracker.proxies.MicroserviceUsersProxy
+ * @see com.mtracker.service.TrackerService
+ */
 @Service
 public class TrackerServiceImpl implements TrackerService {
     private Logger logger = LoggerFactory.getLogger(TrackerServiceImpl.class);
@@ -35,29 +41,53 @@ public class TrackerServiceImpl implements TrackerService {
         this.microserviceRewardsProxy = microserviceRewardsProxy;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
     @Async(value = "taskExecutorGpsUtil")
     @Override
     public CompletableFuture<VisitedLocationDto> trackUserLocation(User user) {
         VisitedLocationDto visitedLocationDto = getVisitedLocation(user);
         microserviceRewardsProxy.calculateRewards(user.getUserName());
+        logger.info("Successfully tracked the location of the following user : " + user.getUserName());
         return CompletableFuture.completedFuture(visitedLocationDto);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
+    @Override
+    public User getUser(String userName) {
+        logger.info("Successfully fetched the user with the following name : " + userName);
+        return microserviceUsersProxy.getUser(userName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
+    @Override
+    public CopyOnWriteArrayList<User> getAllUsers() {
+        logger.info("The users have been successfully fetched");
+        return microserviceUsersProxy.getAllUsers();
+    }
+
+    /**
+     * Tracking user location with GpsUtil API and adding it to his location history.
+     *
+     * @param user, it refers to the registered user.
+     * @return the last location visited by the user.
+     */
     private VisitedLocationDto getVisitedLocation(User user) {
         VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
         LocationDto locationDto = new LocationDto(visitedLocation.location.longitude, visitedLocation.location.latitude);
         VisitedLocationDto visitedLocationDto = new VisitedLocationDto(visitedLocation.userId, locationDto, visitedLocation.timeVisited);
         user.addToVisitedLocations(visitedLocationDto);
         return visitedLocationDto;
-    }
-
-    @Override
-    public User getUser(String userName) {
-        return microserviceUsersProxy.getUser(userName);
-    }
-
-    @Override
-    public CopyOnWriteArrayList<User> getAllUsers() {
-        return microserviceUsersProxy.getAllUsers();
     }
 }

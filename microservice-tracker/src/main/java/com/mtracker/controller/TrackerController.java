@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Exposing the REST services of Tracker to other microservices.
+ *
+ * @see com.mtracker.service.TrackerService
+ */
 @RestController
 public class TrackerController {
     @Autowired
@@ -20,8 +25,14 @@ public class TrackerController {
         this.trackerService = trackerService;
     }
 
+    /**
+     * Mapping a GET request in order to track the location for the user with the given name.
+     *
+     * @param userName, method parameter which should be bound to the web request parameter.
+     * @return the new CompletableFuture with the user's last location.
+     */
     @GetMapping(value = "/trackUser")
-    public CompletableFuture<VisitedLocationDto> trackUserLocation(@RequestParam("userName") String userName) throws ExecutionException, InterruptedException {
+    public CompletableFuture<VisitedLocationDto> trackUserLocation(@RequestParam("userName") String userName) {
         User user = trackerService.getUser(userName);
         return trackerService.trackUserLocation(user);
     }

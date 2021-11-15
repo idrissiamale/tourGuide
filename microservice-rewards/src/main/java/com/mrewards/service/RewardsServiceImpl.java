@@ -22,6 +22,8 @@ import java.util.concurrent.ExecutionException;
 /**
  * Implementation of the RewardsService interface.
  *
+ * @see com.mrewards.proxies.MicroserviceAttractionProxy
+ * @see com.mrewards.proxies.MicroserviceUsersProxy
  * @see com.mrewards.service.RewardsService
  */
 @Service

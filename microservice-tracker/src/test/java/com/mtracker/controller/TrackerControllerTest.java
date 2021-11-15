@@ -1,4 +1,4 @@
-package com.mtracker;
+package com.mtracker.controller;
 
 import com.mtracker.controller.TrackerController;
 import com.mtracker.dto.LocationDto;
@@ -6,6 +6,7 @@ import com.mtracker.dto.VisitedLocationDto;
 import com.mtracker.model.User;
 import com.mtracker.service.TrackerService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -43,6 +44,7 @@ public class TrackerControllerTest {
     }
 
     @Test
+    @DisplayName("Checking that the controller returns status code 200 and that the method is asynchronous when trackUserLocation is invoked")
     public void shouldReturn200AndAsyncStartedTrueAndUserVisitedLocationWhenTrackUserLocationIsCorrectlyInvoked() throws Exception {
         VisitedLocationDto visitedLocation = new VisitedLocationDto(user.getUserId(), new LocationDto(33.817595, -117.922008), new Date());
         user.addToVisitedLocations(visitedLocation);

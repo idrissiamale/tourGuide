@@ -5,7 +5,11 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * User model class with id, name, phone number, email, and the locations he visited as fields.
+ */
 @Getter
 @ToString
 public class User {
@@ -13,8 +17,7 @@ public class User {
 	private final String userName;
 	private String phoneNumber;
 	private String emailAddress;
-	private Date latestLocationTimestamp;
-	private List<VisitedLocationDto> visitedLocations = new ArrayList<>();
+	private CopyOnWriteArrayList<VisitedLocationDto> visitedLocations = new CopyOnWriteArrayList<>();
 
 	public User(UUID userId, String userName, String phoneNumber, String emailAddress) {
 		this.userId = userId;
@@ -23,21 +26,11 @@ public class User {
 		this.emailAddress = emailAddress;
 	}
 
-	public List<VisitedLocationDto> getVisitedLocations() {
-		return Collections.unmodifiableList(visitedLocations);
+	public CopyOnWriteArrayList<VisitedLocationDto> getVisitedLocations() {
+		return visitedLocations;
 	}
 
 	public void addToVisitedLocations(VisitedLocationDto visitedLocation) {
-		synchronized (this) {
-			visitedLocations.add(visitedLocation);
-		}
-	}
-
-	public void clearVisitedLocations() {
-		visitedLocations.clear();
-	}
-
-	public VisitedLocationDto getLastVisitedLocation() {
-		return visitedLocations.get(visitedLocations.size() - 1);
+		visitedLocations.add(visitedLocation);
 	}
 }

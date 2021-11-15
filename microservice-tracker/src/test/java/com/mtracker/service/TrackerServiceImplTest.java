@@ -1,4 +1,4 @@
-package com.mtracker;
+package com.mtracker.service;
 
 import com.mtracker.model.User;
 import com.mtracker.proxies.MicroserviceRewardsProxy;
@@ -6,6 +6,7 @@ import com.mtracker.proxies.MicroserviceUsersProxy;
 import com.mtracker.service.TrackerServiceImpl;
 import gpsUtil.GpsUtil;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -36,6 +37,7 @@ public class TrackerServiceImplTest {
     }
 
     @Test
+    @DisplayName("Checking that the user is correctly tracked")
     public void shouldTrackUserLocation() {
         trackerService.trackUserLocation(user);
 
