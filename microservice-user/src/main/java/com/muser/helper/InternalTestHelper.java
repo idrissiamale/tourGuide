@@ -1,15 +1,16 @@
 package com.muser.helper;
 
+/**
+ * A helper class used to set user number for testing purposes.
+ */
 public class InternalTestHelper {
 
-    // Set this default up to 100,000 for testing
-    private static int internalUserNumber = 100000;
-
-    public static void setInternalUserNumber(int internalUserNumber) {
-        InternalTestHelper.internalUserNumber = internalUserNumber;
-    }
-
+    /**
+     * Fetching the internal user number set to 100,000 for testing.
+     *
+     * @return the user number.
+     */
     public static int getInternalUserNumber() {
-        return internalUserNumber;
+        return 100000;
     }
 }

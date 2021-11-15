@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.muser.model.User;
 import com.muser.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -34,6 +35,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @DisplayName("Checking that the controller returns status code 200 when the user is found by his username")
     public void shouldReturn200WhenUserExists() throws Exception {
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
         String jsonContent = mapper.writeValueAsString(user);
@@ -51,6 +53,7 @@ public class UserControllerTest {
 
 
     @Test
+    @DisplayName("Checking that the controller returns status code 200 when all the users are fetched")
     public void shouldReturn200WhenGetAllUsers() throws Exception {
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
         User user2 = new User(UUID.randomUUID(), "jon2", "000", "jon2@tourGuide.com");

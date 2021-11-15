@@ -2,6 +2,9 @@ package com.muser.dto;
 
 import lombok.*;
 
+/**
+ * A DTO class which represents a location, a place with its latitude and longitude.
+ */
 @Getter
 @Setter
 @ToString

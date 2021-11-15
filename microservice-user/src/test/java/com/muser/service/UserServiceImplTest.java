@@ -2,6 +2,7 @@ package com.muser.service;
 
 import com.muser.model.User;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("Checking that the new user is correctly saved")
     public void shouldReturnNewUserWhenAdded() {
         userServiceImpl.addUser(user);
 
@@ -30,6 +32,7 @@ public class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("Comparing expected userName and actual userName to check that the new user is correctly saved")
     public void shouldGetTheSameUserNameWhenNewUserIsAdded() {
         userServiceImpl.addUser(user);
 
@@ -37,6 +40,7 @@ public class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("Comparing expected userName and actual userName to check that the user is correctly fetched ")
     public void shouldGetTheUser() {
         userServiceImpl.getUser(user2.getUserName());
 
@@ -44,6 +48,7 @@ public class UserServiceImplTest {
     }
 
     @Test
+    @DisplayName("Testing that the users list is working correctly by checking that the list contains the newly added user ")
     public void shouldContainTheNewUser() {
         userServiceImpl.addUser(user);
 
