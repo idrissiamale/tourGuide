@@ -7,6 +7,11 @@ import lombok.ToString;
 
 import java.util.List;
 
+/**
+ * A DTO which gathers the location of the user (latitude/longitude) and the closest five tourist attractions to him.
+ *
+ * @see com.mattraction.dto.AttractionInfo
+ */
 @Getter
 @Setter
 @ToString

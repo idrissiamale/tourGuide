@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Exposing Attraction's REST services to other microservices.
+ *
+ * @see com.mattraction.proxies.MicroserviceUsersProxy
+ * @see com.mattraction.service.AttractionService
+ */
 @RestController
 public class AttractionController {
     private Logger logger = LoggerFactory.getLogger(AttractionController.class);
@@ -27,6 +33,12 @@ public class AttractionController {
         this.attractionService = attractionService;
     }
 
+    /**
+     * Mapping a GET request in order to fetch the UserInfo DTO that contains, among others, the closest five tourist attractions to the user.
+     *
+     * @param userName, method parameter which should be bound to the web request parameter.
+     * @return the UserInfo DTO.
+     */
     @GetMapping(value = "/getNearbyAttractions")
     public UserInfo getNearbyAttractions(@RequestParam String userName) {
         User user = microserviceUsersProxy.getUser(userName);
@@ -35,6 +47,11 @@ public class AttractionController {
     }
 
 
+    /**
+     * Mapping a GET request in order to fetch tourist attractions.
+     *
+     * @return all tourist attractions saved in GpsUtil.
+     */
     @GetMapping(value = "/getAllAttractions")
     public List<AttractionDto> getAllAttractions() {
         logger.info("TourGuide attractions found successfully.");

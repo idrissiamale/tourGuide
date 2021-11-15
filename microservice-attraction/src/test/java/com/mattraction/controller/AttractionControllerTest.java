@@ -11,6 +11,7 @@ import com.mattraction.service.AttractionService;
 import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -64,6 +65,7 @@ public class AttractionControllerTest {
     }
 
     @Test
+    @DisplayName("Checking that the controller returns status code 200 when the UserInfo DTO was correctly fetched")
     public void shouldReturn200WhenUserIsFoundAndUserInfoExists() throws Exception {
         UserInfo userInfo = new UserInfo(33.817595, 117.922008, nearbyAttractions);
         String jsonContent = mapper.writeValueAsString(userInfo);
@@ -81,6 +83,7 @@ public class AttractionControllerTest {
     }
 
     @Test
+    @DisplayName("Checking that the controller returns the closest five attractions to the user when user's name exists")
     public void shouldReturnUserInfoWhichContainsTheClosestFiveAttractionsWhenUserIsFound() throws Exception {
         UserInfo userInfo = new UserInfo(33.817595, 117.922008, nearbyAttractions);
         String jsonContent = mapper.writeValueAsString(userInfo);
@@ -101,6 +104,7 @@ public class AttractionControllerTest {
     }
 
     @Test
+    @DisplayName("Checking that the controller returns status code 200 when the tourist attractions are found")
     public void shouldReturn200WhenAttractionsAreFound() throws Exception {
         List<Attraction> attractions = gpsUtil.getAttractions();
         CopyOnWriteArrayList<AttractionDto> attractionDtoList = new CopyOnWriteArrayList<>();
@@ -119,6 +123,7 @@ public class AttractionControllerTest {
     }
 
     @Test
+    @DisplayName("Checking that the tourist attractions from GpsUtil API are correctly fetched by the controller")
     public void shouldReturnAllAttractionsWhenTheyAreFound() throws Exception {
         List<Attraction> attractions = gpsUtil.getAttractions();
         CopyOnWriteArrayList<AttractionDto> attractionDtoList = new CopyOnWriteArrayList<>();

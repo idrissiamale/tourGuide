@@ -6,6 +6,7 @@ import com.mattraction.model.User;
 import com.mattraction.proxies.MicroserviceUserLocationsProxy;
 import gpsUtil.GpsUtil;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -37,6 +38,7 @@ public class AttractionServiceImplTest {
 
 
     @Test
+    @DisplayName("Checking that we get all tourist attractions saved in GpsUtil API")
     public void shouldReturnAllAttractions() {
         List<AttractionDto> attractions = attractionService.getAttractions();
 
@@ -44,6 +46,7 @@ public class AttractionServiceImplTest {
     }
 
     @Test
+    @DisplayName("Comparing expected name and actual name to check that the tourist attractions are correctly fetched")
     public void shouldReturnTheSameName() {
         List<AttractionDto> attractions = attractionService.getAttractions();
 
@@ -51,17 +54,18 @@ public class AttractionServiceImplTest {
     }
 
     @Test
+    @DisplayName("Checking that the closest five attractions to the user are correctly fetched by comparing their size")
     public void shouldReturnTheClosestFiveAttractions() {
         AttractionDto attraction = attractionService.getAttractions().get(0);
         when(microserviceUserLocationsProxy.getLocation(user.getUserName())).thenReturn(attraction);
 
         UserInfo userInfo = attractionService.getNearbyAttractions(user);
-        System.out.println(userInfo);
 
         assertEquals(5, userInfo.getNearbyAttractions().size());
     }
 
     @Test
+    @DisplayName("Comparing expected name of Disneyland (the first attraction of the list) and the actual name to check that the closest five attractions are correctly fetched")
     public void shouldReturnTheClosestAttractionOfFive() {
         AttractionDto attraction = attractionService.getAttractions().get(0);
         when(microserviceUserLocationsProxy.getLocation(user.getUserName())).thenReturn(attraction);
@@ -72,6 +76,7 @@ public class AttractionServiceImplTest {
     }
 
     @Test
+    @DisplayName("Comparing expected distance of Disneyland (the first attraction of the list) and the actual distance to check that the closest five attractions are correctly fetched")
     public void shouldReturnTheSameDistance() {
         AttractionDto attraction = attractionService.getAttractions().get(0);
         when(microserviceUserLocationsProxy.getLocation(user.getUserName())).thenReturn(attraction);

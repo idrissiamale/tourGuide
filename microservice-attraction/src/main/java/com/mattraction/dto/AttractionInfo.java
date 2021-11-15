@@ -2,6 +2,13 @@ package com.mattraction.dto;
 
 import lombok.*;
 
+/**
+ * A DTO which gathers :
+ * - the name of Tourist attraction,
+ * - Tourist attractions latitude/longitude,
+ * - The distance in miles between the user's location and each of the attractions.
+ * - The reward points for visiting each Attraction.
+ */
 @Getter
 @Setter
 @ToString
