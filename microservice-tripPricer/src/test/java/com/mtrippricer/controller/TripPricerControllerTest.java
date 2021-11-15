@@ -5,6 +5,7 @@ import com.mtrippricer.model.User;
 import com.mtrippricer.proxies.MicroserviceUsersProxy;
 import com.mtrippricer.service.TripPricerService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -42,7 +43,8 @@ public class TripPricerControllerTest {
     }
 
     @Test
-    public void shouldReturnTripDealsWhenUserIsFound() throws Exception {
+    @DisplayName("Checking that the controller returns status code 200 and trip deals for the user with the given name")
+    public void shouldReturn200AndTripDealsWhenUserIsFound() throws Exception {
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
         String tripPricerApiKey = "test-server-api-key";
         int adults = 1;

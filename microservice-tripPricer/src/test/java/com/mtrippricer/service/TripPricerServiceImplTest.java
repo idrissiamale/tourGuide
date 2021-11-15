@@ -2,6 +2,7 @@ package com.mtrippricer.service;
 
 import com.mtrippricer.model.User;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import tripPricer.Provider;
 import tripPricer.TripPricer;
@@ -21,6 +22,7 @@ public class TripPricerServiceImplTest {
     }
 
     @Test
+    @DisplayName("Checking that user's trip deals are correctly fetched by comparing that the expected size is the same as the size returned by the method")
     public void getTripDeals() {
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 

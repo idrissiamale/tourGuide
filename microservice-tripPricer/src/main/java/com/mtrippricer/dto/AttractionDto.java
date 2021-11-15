@@ -4,6 +4,11 @@ import lombok.*;
 
 import java.util.UUID;
 
+/**
+ * A DTO which gathers the tourist attraction's data from GpsUtil API. This class inherits from LocationDto in particular its geographic coordinates.
+ *
+ * @see com.mtrippricer.dto.LocationDto
+ */
 @Getter
 @ToString
 @NoArgsConstructor

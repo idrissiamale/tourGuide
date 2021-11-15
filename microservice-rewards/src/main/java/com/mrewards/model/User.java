@@ -4,7 +4,6 @@ import com.mrewards.dto.VisitedLocationDto;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 

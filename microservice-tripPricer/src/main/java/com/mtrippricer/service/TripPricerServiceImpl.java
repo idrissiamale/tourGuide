@@ -11,6 +11,11 @@ import tripPricer.TripPricer;
 
 import java.util.List;
 
+/**
+ * Implementation of the TripPricerService interface.
+ *
+ * @see com.mtrippricer.service.TripPricerService
+ */
 @Service
 public class TripPricerServiceImpl implements TripPricerService {
     private Logger logger = LoggerFactory.getLogger(TripPricerServiceImpl.class);
@@ -23,6 +28,11 @@ public class TripPricerServiceImpl implements TripPricerService {
         this.tripPricer = tripPricer;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
     @Override
     public List<Provider> getTripDeals(User user) {
         int adults = user.getUserPreferences().getNumberOfAdults();
@@ -30,9 +40,16 @@ public class TripPricerServiceImpl implements TripPricerService {
         int nightsStay = user.getUserPreferences().getTripDuration();
         List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), adults, children, nightsStay, getCumulativeRewardsPoints(user));
         user.setTripDeals(providers);
+        logger.info("The user's trip deals have been successfully fetched");
         return providers;
     }
 
+    /**
+     * Fetching the user's reward points and adding them up.
+     *
+     * @param user, it refers to the registered user.
+     * @return the sum of the user's reward points.
+     */
     private int getCumulativeRewardsPoints(User user) {
         return user.getUserRewards().stream().mapToInt(UserReward::getRewardPoints).sum();
     }

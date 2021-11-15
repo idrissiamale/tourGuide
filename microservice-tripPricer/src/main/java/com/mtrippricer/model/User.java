@@ -1,23 +1,23 @@
 package com.mtrippricer.model;
 
-import com.mtrippricer.dto.VisitedLocationDto;
 import lombok.Getter;
 import tripPricer.Provider;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * A model class which gathers user's data such as his id, name, phone number, email but also his rewards, his travel preferences and trip deals.
+ */
 @Getter
 public class User {
     private final UUID userId;
     private final String userName;
     private String phoneNumber;
     private String emailAddress;
-    private Date latestLocationTimestamp;
-    private List<VisitedLocationDto> visitedLocations = new ArrayList<>();
-    private List<UserReward> userRewards = new ArrayList<>();
+    private CopyOnWriteArrayList<UserReward> userRewards = new CopyOnWriteArrayList<>();
     private UserPreferences userPreferences = new UserPreferences();
     private List<Provider> tripDeals = new ArrayList<>();
 

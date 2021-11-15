@@ -6,6 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import org.zalando.jackson.datatype.money.MoneyModule;
 import tripPricer.TripPricer;
 
+/**
+ * Configuration's class which permits to instantiate TripPricer and MoneyModule APIs in order to use it throughout the application.
+ *
+ * @see tripPricer.TripPricer
+ */
 @Configuration
 public class TripPricerModule {
     @Bean

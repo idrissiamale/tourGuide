@@ -3,6 +3,8 @@ package com.mtracker.controller;
 import com.mtracker.dto.VisitedLocationDto;
 import com.mtracker.model.User;
 import com.mtracker.service.TrackerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +20,7 @@ import java.util.concurrent.ExecutionException;
  */
 @RestController
 public class TrackerController {
+    private Logger logger = LoggerFactory.getLogger(TrackerController.class);
     @Autowired
     private TrackerService trackerService;
 
@@ -34,6 +37,7 @@ public class TrackerController {
     @GetMapping(value = "/trackUser")
     public CompletableFuture<VisitedLocationDto> trackUserLocation(@RequestParam("userName") String userName) {
         User user = trackerService.getUser(userName);
+        logger.info("Successfully tracked the user location");
         return trackerService.trackUserLocation(user);
     }
 }
