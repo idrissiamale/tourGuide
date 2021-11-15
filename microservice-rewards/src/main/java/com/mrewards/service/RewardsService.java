@@ -6,17 +6,50 @@ import com.mrewards.model.UserReward;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutionException;
 
+/**
+ * RewardsService's role is to send reward points to the user if he has visited a tourist attraction.
+ */
 public interface RewardsService {
-    CompletableFuture<Void> calculateRewards(User user) throws ExecutionException, InterruptedException;
+    /**
+     * An asynchronous method which calculates the reward points to send to the user.
+     * To get the reward points, He must have visited an attraction and not have received a reduction for this attraction.
+     *
+     * @param user, it refers to the registered user.
+     * @return the new CompletableFuture.
+     * @see com.mrewards.model.User
+     */
+    CompletableFuture<Void> calculateRewards(User user);
 
-    CopyOnWriteArrayList<UserReward> getUserRewards(User user) throws ExecutionException, InterruptedException;
+    /**
+     * Fetching user's reward points.
+     *
+     * @param user, it refers to the registered user.
+     * @return a thread-safe ArrayList of rewards.
+     * @see com.mrewards.model.User
+     */
+    CopyOnWriteArrayList<UserReward> getUserRewards(User user);
 
+    /**
+     * Retrieves a user by its username. This user is fetched from User Microservice.
+     *
+     * @param userName, the given name.
+     * @return the user with the given name.
+     */
     User getUser(String userName);
 
+    /**
+     * Fetching users from User Microservice.
+     *
+     * @return a thread-safe ArrayList of users.
+     */
     CopyOnWriteArrayList<User> getAllUsers();
 
+    /**
+     * Fetching tourist attractions from Attraction Microservice.
+     *
+     * @return a thread-safe ArrayList of attractions.
+     */
     CopyOnWriteArrayList<AttractionDto> getAllAttractions();
 
 }

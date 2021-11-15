@@ -5,20 +5,15 @@ import com.mrewards.dto.VisitedLocationDto;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * A model class which gathers user's data about his reward points and the attraction he visited.
+ */
 @Getter
 @ToString
 public class UserReward {
     private VisitedLocationDto visitedLocation;
     private AttractionDto attraction;
     private int rewardPoints;
-
-    public UserReward() {
-    }
-
-    public UserReward(VisitedLocationDto visitedLocation, AttractionDto attraction) {
-        this.visitedLocation = visitedLocation;
-        this.attraction = attraction;
-    }
 
     public UserReward(VisitedLocationDto visitedLocation, AttractionDto attraction, int rewardPoints) {
         this.visitedLocation = visitedLocation;

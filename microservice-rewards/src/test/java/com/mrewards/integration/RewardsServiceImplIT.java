@@ -5,6 +5,7 @@ import com.mrewards.dto.VisitedLocationDto;
 import com.mrewards.model.User;
 import com.mrewards.service.RewardsService;
 import org.apache.commons.lang3.time.StopWatch;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +28,8 @@ public class RewardsServiceImplIT {
     private RewardsService rewardsService;
 
     @Test
-    public void shouldGetUserRewardsFor100000UsersInLessThan20Minutes() throws InterruptedException, ExecutionException {
+    @DisplayName("Testing the performance of the asynchronous method by checking that users (100,000 in this test) have received their rewards in less than 20 minutes")
+    public void shouldGetUserRewardsFor100000UsersInLessThan20Minutes() {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         AttractionDto attraction = rewardsService.getAllAttractions().get(0);
@@ -46,6 +48,7 @@ public class RewardsServiceImplIT {
                 try {
                     this.taskExecutor.getThreadPoolExecutor().awaitTermination(200, TimeUnit.MILLISECONDS);
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }

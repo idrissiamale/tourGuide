@@ -7,6 +7,7 @@ import com.mrewards.model.UserReward;
 import com.mrewards.proxies.MicroserviceAttractionProxy;
 import com.mrewards.proxies.MicroserviceUsersProxy;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -66,6 +67,7 @@ public class RewardsServiceImplTest {
     }
 
     @Test
+    @DisplayName("Testing that calculateRewards is working well by checking that the user has received his rewards after visiting a tourist attraction")
     public void shouldGetUserRewards() {
         AttractionDto attractionDto = new AttractionDto("Disneyland", "Anaheim", "CA", 33.817595, -117.922008);
         when(microserviceAttractionProxy.getAllAttractions()).thenReturn(attractions);

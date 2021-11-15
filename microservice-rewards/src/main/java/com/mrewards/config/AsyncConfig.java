@@ -8,23 +8,12 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
+/**
+ * Configuration's class which defines a ThreadPoolTaskExecutor in order to manage the application's threads.
+ */
 @Configuration
 @EnableAsync
 public class AsyncConfig {
-    @Bean(name = "taskExecutor")
-    public Executor taskExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(70);
-        executor.setMaxPoolSize(80);
-        executor.setQueueCapacity(1000);
-        executor.setKeepAliveSeconds(60);
-        executor.setWaitForTasksToCompleteOnShutdown(true);
-        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-        executor.setThreadNamePrefix("rewardsThread-");
-        executor.initialize();
-        return executor;
-    }
-
     @Bean(name = "taskExecutorRewardsPoint")
     public Executor taskExecutorReward() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();

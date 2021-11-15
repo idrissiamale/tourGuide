@@ -7,6 +7,8 @@ import com.mrewards.model.User;
 import com.mrewards.model.UserReward;
 import com.mrewards.proxies.MicroserviceAttractionProxy;
 import com.mrewards.proxies.MicroserviceUsersProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -17,8 +19,14 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Implementation of the RewardsService interface.
+ *
+ * @see com.mrewards.service.RewardsService
+ */
 @Service
 public class RewardsServiceImpl implements RewardsService {
+    private Logger logger = LoggerFactory.getLogger(RewardsServiceImpl.class);
     private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
     @Autowired
     private RewardCentral rewardCentral;
@@ -35,7 +43,12 @@ public class RewardsServiceImpl implements RewardsService {
         this.microserviceUsersProxy = microserviceUsersProxy;
     }
 
-    @Async(value = "taskExecutor")
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
+    @Async(value = "taskExecutorRewardsPoint")
     @Override
     public CompletableFuture<Void> calculateRewards(User user) {
         List<VisitedLocationDto> userLocations = user.getVisitedLocations();
@@ -47,26 +60,98 @@ public class RewardsServiceImpl implements RewardsService {
                 }
             }
         }
+        logger.info("The rewards have been successfully calculated for the following user : " + user.getUserName());
         return CompletableFuture.completedFuture(null);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
+    @Override
+    public CopyOnWriteArrayList<UserReward> getUserRewards(User user) {
+        logger.info("Successfully fetched rewards for the following user : " + user.getUserName());
+        return user.getUserRewards();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
+    @Override
+    public User getUser(String userName) {
+        logger.info("Successfully fetched the user with the following name : " + userName);
+        return microserviceUsersProxy.getUser(userName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
+    @Override
+    public CopyOnWriteArrayList<User> getAllUsers() {
+        logger.info("The users have been successfully fetched");
+        return microserviceUsersProxy.getAllUsers();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
+    @Override
+    public CopyOnWriteArrayList<AttractionDto> getAllAttractions() {
+        logger.info("The attractions have been successfully fetched");
+        return microserviceAttractionProxy.getAllAttractions();
+    }
+
+    /**
+     * Submitting reward points to the user.
+     *
+     * @param user,            it refers to the registered user.
+     * @param attraction,      it refers to the tourist attraction visited by the user.
+     * @param visitedLocation, it refers to the place visited by the user.
+     */
     private void addRewardPoints(User user, AttractionDto attraction, VisitedLocationDto visitedLocation) {
         int rewardPoints = rewardCentral.getAttractionRewardPoints(user.getUserId(), attraction.getAttractionId());
         user.addUserReward(new UserReward(visitedLocation, attraction, rewardPoints));
     }
 
-
+    /**
+     * Checking if the user whether received or not the reward points for the following attraction.
+     *
+     * @param user,       it refers to the registered user.
+     * @param attraction, it refers to the tourist attraction visited by the user.
+     * @return true if the user has not yet received the reward points.
+     */
     private boolean hasNoReward(User user, AttractionDto attraction) {
         return user.getUserRewards().stream()
                 .noneMatch(reward -> reward.getAttraction().getAttractionName().equals(attraction.getAttractionName()));
     }
 
+    /**
+     * Checking if the user whether visited or not the following attraction by checking if the user is near the attraction.
+     * The proximity is in miles.
+     *
+     * @param visitedLocation, it refers to the place visited by the user.
+     * @param attraction,      it refers to the tourist attraction visited by the user.
+     * @return true if the user is near the attraction.
+     */
     private boolean nearAttraction(VisitedLocationDto visitedLocation, AttractionDto attraction) {
-        // proximity in miles
         int proximityBuffer = 10;
         return !(getDistance(attraction, visitedLocation.getLocationDto()) > proximityBuffer);
     }
 
+    /**
+     * Method which calculates the distance between two locations. The formula used here to find the distance between them is The Haversine Formula.
+     *
+     * @param loc1, latitude/longitude of the first location.
+     * @param loc2, latitude/longitude of the second location compared with the first to get the distance between them.
+     * @return the distance between two locations in miles.
+     */
     private double getDistance(LocationDto loc1, LocationDto loc2) {
         double lat1 = Math.toRadians(loc1.getLatitude());
         double lon1 = Math.toRadians(loc1.getLongitude());
@@ -78,26 +163,6 @@ public class RewardsServiceImpl implements RewardsService {
 
         double nauticalMiles = 60 * Math.toDegrees(angle);
         return STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;
-    }
-
-    @Override
-    public CopyOnWriteArrayList<UserReward> getUserRewards(User user) throws ExecutionException, InterruptedException {
-        return user.getUserRewards();
-    }
-
-    @Override
-    public User getUser(String userName) {
-        return microserviceUsersProxy.getUser(userName);
-    }
-
-    @Override
-    public CopyOnWriteArrayList<User> getAllUsers() {
-        return microserviceUsersProxy.getAllUsers();
-    }
-
-    @Override
-    public CopyOnWriteArrayList<AttractionDto> getAllAttractions() {
-        return microserviceAttractionProxy.getAllAttractions();
     }
 }
 

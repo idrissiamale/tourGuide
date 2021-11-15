@@ -8,7 +8,7 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * User model class with id, name, phone number and email and the locations he visited as fields.
+ * User model class with id, name, phone number, email and the locations he visited as fields.
  */
 @Getter
 @ToString

@@ -9,6 +9,7 @@ import com.mrewards.model.User;
 import com.mrewards.model.UserReward;
 import com.mrewards.service.RewardsService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -49,6 +50,7 @@ public class RewardsControllerTest {
     }
 
     @Test
+    @DisplayName("Checking that the controller returns status code 200 and that the method is asynchronous when calculateRewards is invoked")
     public void shouldReturn200AndAsyncStartedTrueWhenCalculateRewardsIsCorrectlyInvoked() throws Exception {
         user.addToVisitedLocations(new VisitedLocationDto(user.getUserId(), new LocationDto(33.817595, -117.922008), new Date()));
         when(rewardsService.getUser(user.getUserName())).thenReturn(user);
@@ -68,6 +70,7 @@ public class RewardsControllerTest {
     }
 
     @Test
+    @DisplayName("Checking that the controller returns status code 200 when the user has received his rewards")
     public void shouldReturn200WhenRewardPointsHasBeenSubmitted() throws Exception {
         user.addToVisitedLocations(new VisitedLocationDto(user.getUserId(), new LocationDto(33.817595, -117.922008), new Date()));
         user.addUserReward(new UserReward(user.getVisitedLocations().get(0),new AttractionDto("Disneyland", "Anaheim", "CA", 33.817595D, -117.922008), 5));

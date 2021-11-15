@@ -8,6 +8,9 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * User model class with id, name, phone number, email, the locations he visited and his reward points as fields.
+ */
 @Getter
 @ToString
 public class User {
@@ -15,7 +18,6 @@ public class User {
     private final String userName;
     private String phoneNumber;
     private String emailAddress;
-    private Date latestLocationTimestamp;
     private CopyOnWriteArrayList<VisitedLocationDto> visitedLocations = new CopyOnWriteArrayList<>();
     private CopyOnWriteArrayList<UserReward> userRewards = new CopyOnWriteArrayList<>();
 
