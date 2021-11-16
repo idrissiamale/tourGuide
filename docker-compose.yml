@@ -1,71 +1,79 @@
 version: '3.8'
 services:
   eureka-server:
+    build:
+      context: /Users/idrissi/Workspace/tourGuideMicroservices/eureka-server
+      dockerfile: Dockerfile
     container_name: eureka-server
-    build:
-      context: eureka-server
-      dockerfile: Dockerfile
-    image: eureka-server
+    image: eureka-server:latest
     ports:
-      - "7070:7070"
+      - published: 7070
+        target: 7070
   microservice-attraction:
+    build:
+      context: /Users/idrissi/Workspace/tourGuideMicroservices/microservice-attraction
+      dockerfile: Dockerfile
     container_name: microservice-attraction
-    build:
-      context: microservice-attraction
-      dockerfile: Dockerfile
-    image: microservice-attraction
-    ports:
-      - "8084:8084"
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:7070/eureka
+    image: microservice-attraction:latest
+    ports:
+      - published: 8084
+        target: 8084
   microservice-rewards:
+    build:
+      context: /Users/idrissi/Workspace/tourGuideMicroservices/microservice-rewards
+      dockerfile: Dockerfile
     container_name: microservice-rewards
-    build:
-      context: microservice-rewards
-      dockerfile: Dockerfile
-    image: microservice-rewards
-    ports:
-      - "8085:8085"
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:7070/eureka
+    image: microservice-rewards:latest
+    ports:
+      - published: 8085
+        target: 8085
   microservice-tracker:
+    build:
+      context: /Users/idrissi/Workspace/tourGuideMicroservices/microservice-tracker
+      dockerfile: Dockerfile
     container_name: microservice-tracker
-    build:
-      context: microservice-tracker
-      dockerfile: Dockerfile
-    image: microservice-tracker
-    ports:
-      - "8082:8082"
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:7070/eureka
+    image: microservice-tracker:latest
+    ports:
+      - published: 8082
+        target: 8082
   microservice-tripPricer:
-    container_name: microservice-trippricer
     build:
-      context: microservice-tripPricer
+      context: /Users/idrissi/Workspace/tourGuideMicroservices/microservice-tripPricer
       dockerfile: Dockerfile
-    image: microservice-trippricer
-    ports:
-      - "8086:8086"
+    container_name: microservice-trippricer
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:7070/eureka
+    image: microservice-trippricer:latest
+    ports:
+      - published: 8086
+        target: 8086
   microservice-user:
-    container_name: microservice-user
     build:
       context: microservice-user
       dockerfile: Dockerfile
-    image: microservice-user
-    ports:
-      - "8081:8081"
+    container_name: microservice-user
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:7070/eureka
+    image: microservice-user:latest
+    ports:
+      - published: 8081
+        target: 8081
   microservice-userLocation:
-    container_name: microservice-userlocation
     build:
-      context: microservice-userLocation
+      context: /Users/idrissi/Workspace/tourGuideMicroservices/microservice-userLocation
       dockerfile: Dockerfile
-    image: microservice-userlocation
-    ports:
-      - "8083:8083"
+    container_name: microservice-userlocation
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:7070/eureka
+    image: microservice-userlocation:latest
+    ports:
+      - published: 8083
+        target: 8083
+
 
