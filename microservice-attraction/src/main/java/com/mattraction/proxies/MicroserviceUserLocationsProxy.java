@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * An interface which permits to consume, with Feign client, the REST services exposed by UserLocation microservice.
  */
-@FeignClient(name = "microservice-userLocation", url = "localhost:8083")
+@FeignClient(name = "microservice-userLocation", url = "${muserlocation.url}")
 public interface MicroserviceUserLocationsProxy {
 
     /**

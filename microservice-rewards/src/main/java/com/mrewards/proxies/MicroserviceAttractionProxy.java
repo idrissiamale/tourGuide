@@ -9,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * An interface which permits to consume, with Feign client, the REST services exposed by Attraction microservice.
  */
-@FeignClient(name = "microservice-attraction", url = "localhost:8084")
+@FeignClient(name = "microservice-attraction", url = "${mattraction.url}")
 public interface MicroserviceAttractionProxy {
 
     /**

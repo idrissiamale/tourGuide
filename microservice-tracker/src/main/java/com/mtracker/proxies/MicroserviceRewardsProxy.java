@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * An interface which permits to consume, with Feign client, the REST services exposed by Rewards microservice.
  */
-@FeignClient(name = "microservice-rewards", url = "localhost:8085")
+@FeignClient(name = "microservice-rewards", url = "${mrewards.url}")
 public interface MicroserviceRewardsProxy {
 
     /**

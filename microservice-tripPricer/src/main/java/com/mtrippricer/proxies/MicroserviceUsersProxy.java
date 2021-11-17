@@ -11,7 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * An interface which permits to consume, with Feign client, the REST services exposed by User microservice.
  */
-@FeignClient(name = "microservice-user", url = "localhost:8081")
+@FeignClient(name = "microservice-user", url = "${muser.url}")
 public interface MicroserviceUsersProxy {
 
     /**
