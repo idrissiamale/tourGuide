@@ -10,8 +10,6 @@ import javax.money.Monetary;
  * A model class which gathers the user's travel preferences such as the trip duration, the number of children, etc.
  */
 @Getter
-@Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserPreferences {

@@ -10,10 +10,7 @@ import java.util.UUID;
  *
  * @see com.mtrippricer.dto.LocationDto
  */
-@Getter
-@ToString
 @NoArgsConstructor
-@AllArgsConstructor
 public class VisitedLocationDto {
     private UUID userId;
     private LocationDto locationDto;

@@ -9,10 +9,8 @@ import java.util.UUID;
  *
  * @see com.mtrippricer.dto.LocationDto
  */
-@Getter
-@ToString
+
 @NoArgsConstructor
-@AllArgsConstructor
 public class AttractionDto extends LocationDto {
     private String attractionName;
     private String city;

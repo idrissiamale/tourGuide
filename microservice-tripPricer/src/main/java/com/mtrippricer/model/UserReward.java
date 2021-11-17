@@ -12,8 +12,6 @@ import lombok.ToString;
  */
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class UserReward {
 	private VisitedLocationDto visitedLocation;
 	private AttractionDto attraction;
