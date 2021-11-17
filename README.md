@@ -60,12 +60,17 @@ You can go to http://localhost:7070 to view the Eureka dashboard.
 
 
 ### Testing
-The application has unit and integration tests. To run them, execute the Gradle command below:
+
+The application has unit and integration tests. To run them, please execute the Gradle command below:
 
 `./gradlew test`
 
-Please use JaCoCo for the code coverage. To run it, use the command below:
+Please use JaCoCo for the code coverage. To run it, please use the command below:
 
 `./gradlew codeCoverageReport`
 
-### Containerization
+### Containerization with Docker
+
+To run TourGuide container, please execute the command below:
+
+`docker-compose up`

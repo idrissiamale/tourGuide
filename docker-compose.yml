@@ -55,7 +55,7 @@ services:
         target: 8086
   microservice-user:
     build:
-      context: microservice-user
+      context: /Users/idrissi/Workspace/tourGuideMicroservices/microservice-user
       dockerfile: Dockerfile
     container_name: microservice-user
     environment:
